@@ -1,5 +1,9 @@
 import { Client } from 'faunadb'
 
-export default new Client({
-  secret: String(process.env.FAUNADB_SERVER_SECRET)
-})
+export const makeClient = (
+  secret: string = String(process.env.FAUNADB_SERVER_SECRET)
+) => {
+  return new Client({ secret })
+}
+
+export default makeClient()
