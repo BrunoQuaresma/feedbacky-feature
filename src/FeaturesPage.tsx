@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 type Features = {
@@ -24,6 +25,8 @@ const FeaturesPage: React.FC = () => {
   return (
     <>
       <h1>My Features</h1>
+      <Link to="/features/new">New feature</Link>
+
       {!features && <div>Loading...</div>}
       {features &&
         features.map(feature => (
