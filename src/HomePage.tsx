@@ -2,24 +2,38 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-type Features = {
+type Feature = {
   id: string
   name: string
   description: string
-  votes: {}[]
+}
+
+type Survey = {
+  id: string
+  name: string
+  features: Feature[]
 }
 
 type FeaturesResponse = {
-  features: Features[]
+  features: Feature[]
+}
+
+type SurveysResponse = {
+  surveys: Survey[]
 }
 
 const FeaturesPage: React.FC = () => {
-  const [features, setFeatures] = useState<Features[]>()
+  const [features, setFeatures] = useState<Feature[]>()
+  const [surveys, setSurveys] = useState<Survey[]>()
 
   useEffect(() => {
     axios
       .get<FeaturesResponse>('/api/features')
       .then(response => setFeatures(response.data.features))
+
+    axios
+      .get<SurveysResponse>('/api/surveys')
+      .then(response => setSurveys(response.data.surveys))
   }, [])
 
   return (
@@ -33,7 +47,20 @@ const FeaturesPage: React.FC = () => {
           <div key={feature.id}>
             <h3>{feature.name}</h3>
             <p>{feature.description}</p>
-            <p>Votes: {feature.votes.length}</p>
+          </div>
+        ))}
+
+      <h1>My surveys</h1>
+      <Link to="/surveys/new">New survey</Link>
+
+      {!surveys && <div>Loading...</div>}
+      {surveys &&
+        surveys.map(survey => (
+          <div key={survey.id}>
+            <h3>{survey.name}</h3>
+            <small>
+              {survey.features.map(feature => feature.name).join(', ')}
+            </small>
           </div>
         ))}
     </>
