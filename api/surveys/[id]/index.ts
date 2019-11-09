@@ -1,5 +1,5 @@
 import { NowRequest, NowResponse } from '@now/node'
-import survey from './_survey'
+import survey from '../_survey'
 
 export default async (req: NowRequest, res: NowResponse) => {
   switch (req.method) {
