@@ -8,7 +8,7 @@ type NewFeatureForm = {
   description: string
 }
 
-const NewFeaturesPage: React.FC = () => {
+const NewFeaturePage: React.FC = () => {
   const { register, handleSubmit } = useForm<NewFeatureForm>()
   const history = useHistory()
 
@@ -40,4 +40,4 @@ const NewFeaturesPage: React.FC = () => {
   )
 }
 
-export default NewFeaturesPage
+export default NewFeaturePage

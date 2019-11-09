@@ -1,27 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
-type Feature = {
-  id: string
-  name: string
-  description: string
-}
-
-type Survey = {
-  id: string
-  name: string
-  number_of_votes: number
-  features: Feature[]
-}
-
-type FeaturesResponse = {
-  features: Feature[]
-}
-
-type SurveysResponse = {
-  surveys: Survey[]
-}
+import { FeaturesResponse, SurveysResponse, Feature, Survey } from './types'
 
 const FeaturesPage: React.FC = () => {
   const [features, setFeatures] = useState<Feature[]>()

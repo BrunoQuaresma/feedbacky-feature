@@ -11,6 +11,6 @@ export default async (req: NowRequest, res: NowResponse) => {
       return newFeature(req, res)
 
     default:
-      res.status(404)
+      res.status(404).end()
   }
 }
