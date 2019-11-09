@@ -11,6 +11,9 @@ const App: React.FC = () => {
     <Router>
       <ul>
         <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
           <Link to="/integrations">Integrations</Link>
         </li>
       </ul>

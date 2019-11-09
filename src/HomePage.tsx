@@ -19,18 +19,6 @@ const FeaturesPage: React.FC = () => {
 
   return (
     <>
-      <h1>My Features</h1>
-      <Link to="/features/new">New feature</Link>
-
-      {!features && <div>Loading...</div>}
-      {features &&
-        features.map(feature => (
-          <div key={feature.id}>
-            <h3>{feature.name}</h3>
-            <p>{feature.description}</p>
-          </div>
-        ))}
-
       <h1>My surveys</h1>
       <Link to="/surveys/new">New survey</Link>
 
@@ -45,6 +33,18 @@ const FeaturesPage: React.FC = () => {
             <div>
               <small>Votes: {survey.number_of_votes}</small>
             </div>
+          </div>
+        ))}
+
+      <h1>My Features</h1>
+      <Link to="/features/new">New feature</Link>
+
+      {!features && <div>Loading...</div>}
+      {features &&
+        features.map(feature => (
+          <div key={feature.id}>
+            <h3>{feature.name}</h3>
+            <p>{feature.description}</p>
           </div>
         ))}
     </>
