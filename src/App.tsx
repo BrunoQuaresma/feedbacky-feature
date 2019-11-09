@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type Features = {
+  id: string
+  name: string
+  description: string
+  votes: {}[]
 }
 
-export default App;
+type FeaturesResponse = {
+  features: Features[]
+}
+
+const App: React.FC = () => {
+  const [features, setFeatures] = useState<Features[]>()
+
+  useEffect(() => {
+    axios
+      .get<FeaturesResponse>('/api/features')
+      .then(response => setFeatures(response.data.features))
+  }, [])
+
+  return (
+    <>
+      <h1>My Features</h1>
+      {!features && <div>Loading...</div>}
+      {features &&
+        features.map(feature => (
+          <div key={feature.id}>
+            <h3>{feature.name}</h3>
+            <p>{feature.description}</p>
+            <p>Votes: {feature.votes.length}</p>
+          </div>
+        ))}
+    </>
+  )
+}
+
+export default App

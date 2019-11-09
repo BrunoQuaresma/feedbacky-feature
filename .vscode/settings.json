@@ -1,0 +1,5 @@
+{
+  "javascript.format.insertSpaceAfterConstructor": true,
+  "javascript.implicitProjectConfig.checkJs": true,
+  "javascript.updateImportsOnFileMove.enabled": "always"
+}
