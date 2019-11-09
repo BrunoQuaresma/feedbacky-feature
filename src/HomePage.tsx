@@ -26,7 +26,9 @@ const FeaturesPage: React.FC = () => {
       {surveys &&
         surveys.map(survey => (
           <div key={survey.id}>
-            <h3>{survey.name}</h3>
+            <Link to={`/surveys/${survey.id}`}>
+              <h3>{survey.name}</h3>
+            </Link>
             <small>
               {survey.features.map(feature => feature.name).join(', ')}
             </small>
