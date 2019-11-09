@@ -5,19 +5,12 @@ import { FeatureDoc } from '../_types'
 import { parseFeatureDoc } from '../_utils'
 
 export default async (req: NowRequest, res: NowResponse) => {
-  const userClient = makeClient(
-    'fnEDcxF7uUACEgNy4F_EkAIUhajtWDo2-UMKzMJcAhiNLzShNNA'
-  )
-
+  const userClient = makeClient(req.cookies.token)
   const { data } = await userClient.query<values.Page<FeatureDoc>>(
     q.Map(q.Paginate(q.Match(q.Index('features_by_user'), q.Identity())), x =>
       q.Get(x)
     )
   )
 
-  const features = data.map(parseFeatureDoc)
-
-  res.json({
-    features
-  })
+  res.json({ features: data.map(parseFeatureDoc) })
 }

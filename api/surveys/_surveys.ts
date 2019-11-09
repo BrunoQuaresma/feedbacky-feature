@@ -12,10 +12,7 @@ type SurveyDoc = {
 }
 
 export default async (req: NowRequest, res: NowResponse) => {
-  const userClient = makeClient(
-    'fnEDcxF7uUACEgNy4F_EkAIUhajtWDo2-UMKzMJcAhiNLzShNNA'
-  )
-
+  const userClient = makeClient(req.cookies.token)
   const { data } = await userClient.query<values.Page<SurveyDoc>>(
     q.Map(
       q.Paginate(q.Match(q.Index('surveys_by_user'), q.Identity())),

@@ -1,5 +1,6 @@
 import { NowRequest, NowResponse } from '@now/node'
 import { query as q } from 'faunadb'
+import cookie from 'cookie'
 import db from './_db'
 
 type Credentials = {
@@ -7,23 +8,37 @@ type Credentials = {
   password: string
 }
 
+type Token = {
+  secret: string
+}
+
+const hour = 3600000
+const oneWeek = 1 * 24 * hour
+const isProduction = process.env.NODE_ENV === 'production'
+
 export default async (req: NowRequest, res: NowResponse) => {
   const { email, password }: Credentials = req.body
-  const { token } = await db.query(
+  const { secret } = await db.query<Token>(
     q.Let(
       {
         user: q.Get(q.Match(q.Index('user_by_email'), email))
       },
-      {
-        user: q.Var('user'),
-        token: q.Login(q.Select(['ref'], q.Var('user')), {
-          password
-        })
-      }
+      q.Login(q.Select(['ref'], q.Var('user')), {
+        password
+      })
     )
   )
 
-  res.json({
-    token: token.secret
-  })
+  res.setHeader(
+    'Set-Cookie',
+    cookie.serialize('token', secret, {
+      secure: isProduction,
+      httpOnly: true,
+      path: '/',
+      maxAge: oneWeek,
+      sameSite: 'strict'
+    })
+  )
+
+  res.status(200).end()
 }

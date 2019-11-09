@@ -18,9 +18,7 @@ type NewSurveyDoc = {
 }
 
 export default async (req: NowRequest, res: NowResponse) => {
-  const userClient = makeClient(
-    'fnEDcxF7uUACEgNy4F_EkAIUhajtWDo2-UMKzMJcAhiNLzShNNA'
-  )
+  const userClient = makeClient(req.cookies.token)
   const { name, feature_ids }: NewSurveyParams = req.body
   const survey = await userClient.query<NewSurveyDoc>(
     q.Create(q.Collection('surveys'), {

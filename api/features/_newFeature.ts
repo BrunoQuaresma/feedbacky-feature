@@ -17,9 +17,7 @@ type NewFeatureDoc = {
 }
 
 export default async (req: NowRequest, res: NowResponse) => {
-  const userClient = makeClient(
-    'fnEDcxF7uUACEgNy4F_EkAIUhajtWDo2-UMKzMJcAhiNLzShNNA'
-  )
+  const userClient = makeClient(req.cookies.token)
   const { name, description }: NewFeatureParams = req.body
   const feature = await userClient.query<NewFeatureDoc>(
     q.Create(q.Collection('features'), {

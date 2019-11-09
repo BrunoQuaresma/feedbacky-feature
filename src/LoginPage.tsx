@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import useForm from 'react-hook-form'
+import { useHistory } from 'react-router'
 
 type LoginForm = {
   email: string
@@ -15,10 +16,11 @@ const TOKEN_URL = '/api/token'
 
 const LoginPage: React.FC = () => {
   const { register, handleSubmit } = useForm<LoginForm>()
+  const history = useHistory()
 
   const onSubmit = async (form: LoginForm) => {
-    const response = await axios.post<TokenResponse>(TOKEN_URL, form)
-    window.localStorage.setItem('token', response.data.token)
+    await axios.post<TokenResponse>(TOKEN_URL, form)
+    history.push('/')
   }
 
   return (
