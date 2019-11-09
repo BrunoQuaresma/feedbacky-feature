@@ -11,6 +11,7 @@ type Feature = {
 type Survey = {
   id: string
   name: string
+  number_of_votes: number
   features: Feature[]
 }
 
@@ -61,6 +62,9 @@ const FeaturesPage: React.FC = () => {
             <small>
               {survey.features.map(feature => feature.name).join(', ')}
             </small>
+            <div>
+              <small>Votes: {survey.number_of_votes}</small>
+            </div>
           </div>
         ))}
     </>

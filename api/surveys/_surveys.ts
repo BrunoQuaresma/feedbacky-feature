@@ -8,6 +8,7 @@ type SurveyDoc = {
   ref: values.Ref
   data: {}
   features: FeatureDoc[]
+  number_of_votes: number
 }
 
 export default async (req: NowRequest, res: NowResponse) => {
@@ -16,18 +17,23 @@ export default async (req: NowRequest, res: NowResponse) => {
   )
 
   const { data } = await userClient.query<values.Page<SurveyDoc>>(
-    q.Map(q.Paginate(q.Match(q.Index('surveys_by_user'), q.Identity())), x =>
-      q.Let(
-        {
-          surveyDoc: q.Get(x)
-        },
-        q.Merge(q.Var('surveyDoc'), {
-          features: q.Map(
-            q.Select(['data', 'features'], q.Var('surveyDoc')),
-            x => q.Get(x)
-          )
-        })
-      )
+    q.Map(
+      q.Paginate(q.Match(q.Index('surveys_by_user'), q.Identity())),
+      surveyRef =>
+        q.Let(
+          {
+            surveyDoc: q.Get(surveyRef)
+          },
+          q.Merge(q.Var('surveyDoc'), {
+            features: q.Map(
+              q.Select(['data', 'features'], q.Var('surveyDoc')),
+              featureRef => q.Get(featureRef)
+            ),
+            number_of_votes: q.Count(
+              q.Match(q.Index('votes_by_survey'), surveyRef)
+            )
+          })
+        )
     )
   )
 
@@ -35,7 +41,8 @@ export default async (req: NowRequest, res: NowResponse) => {
     ...surveys.data,
     user: undefined,
     id: surveys.ref.id,
-    features: surveys.features.map(parseFeatureDoc)
+    features: surveys.features.map(parseFeatureDoc),
+    number_of_votes: surveys.number_of_votes
   }))
 
   res.json({
