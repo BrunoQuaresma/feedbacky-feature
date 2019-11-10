@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import useForm from 'react-hook-form'
+import SimpleMDE from 'react-simplemde-editor'
+import 'easymde/dist/easymde.min.css'
 import { useHistory } from 'react-router'
 
 type NewFeatureForm = {
@@ -9,8 +11,15 @@ type NewFeatureForm = {
 }
 
 const NewFeaturePage: React.FC = () => {
-  const { register, handleSubmit } = useForm<NewFeatureForm>()
+  const { register, handleSubmit, setValue, watch, unregister } = useForm<
+    NewFeatureForm
+  >()
   const history = useHistory()
+
+  useEffect(() => {
+    register({ name: 'description' })
+    return () => unregister('description')
+  }, [register, unregister])
 
   const onSubmit = async (form: NewFeatureForm) => {
     await axios.post('/api/features', form)
@@ -23,48 +32,44 @@ const NewFeaturePage: React.FC = () => {
         New Feature
       </h1>
 
-      <div className="max-w-xl">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-3">
-            <label
-              htmlFor=""
-              className="block font-medium text-sm text-gray-700 mb-1"
-            >
-              Name
-            </label>
-            <input
-              required
-              autoFocus
-              name="name"
-              type="text"
-              ref={register}
-              className="bg-white px-3 py-2 block w-full rounded border border-solid border-gray-300 outline-none"
-            />
-          </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mb-3 max-w-xl">
+          <label
+            htmlFor=""
+            className="block font-medium text-sm text-gray-700 mb-2"
+          >
+            Name
+          </label>
+          <input
+            required
+            autoFocus
+            name="name"
+            type="text"
+            ref={register}
+            className="bg-white px-3 py-2 block w-full rounded border border-solid border-gray-300 outline-none"
+          />
+        </div>
 
-          <div className="mb-3">
-            <label
-              htmlFor=""
-              className="block font-medium text-sm text-gray-700 mb-1"
-            >
-              Description
-            </label>
-            <textarea
-              required
-              name="description"
-              rows={10}
-              ref={register}
-              className="bg-white px-3 py-2 block w-full rounded border border-solid border-gray-300 outline-none"
-            />
-          </div>
+        <div className="mb-3">
+          <label
+            htmlFor=""
+            className="block font-medium text-sm text-gray-700 mb-2"
+          >
+            Description
+          </label>
 
-          <div className="flex justify-end">
-            <button className="shadow bg-indigo-500 text-white inline-block rounded-full py-2 px-4 text-xs font-medium uppercase mt-2">
-              Save feature
-            </button>
-          </div>
-        </form>
-      </div>
+          <SimpleMDE
+            onChange={value => setValue('description', value)}
+            options={{ spellChecker: false, status: false }}
+          />
+        </div>
+
+        <div className="flex justify-end">
+          <button className="shadow bg-indigo-500 text-white inline-block rounded-full py-2 px-4 text-xs font-medium uppercase mt-2">
+            Save feature
+          </button>
+        </div>
+      </form>
     </>
   )
 }
