@@ -1,30 +1,30 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
-import useForm from 'react-hook-form'
-import SimpleMDE from 'react-simplemde-editor'
-import 'easymde/dist/easymde.min.css'
-import { useHistory } from 'react-router'
+import React, { useEffect } from "react";
+import axios from "axios";
+import useForm from "react-hook-form";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
+import { useHistory } from "react-router";
 
 type NewFeatureForm = {
-  name: string
-  description: string
-}
+  name: string;
+  description: string;
+};
 
 const NewFeaturePage: React.FC = () => {
-  const { register, handleSubmit, setValue, watch, unregister } = useForm<
+  const { register, handleSubmit, setValue, unregister } = useForm<
     NewFeatureForm
-  >()
-  const history = useHistory()
+  >();
+  const history = useHistory();
 
   useEffect(() => {
-    register({ name: 'description' })
-    return () => unregister('description')
-  }, [register, unregister])
+    register({ name: "description" });
+    return () => unregister("description");
+  }, [register, unregister]);
 
   const onSubmit = async (form: NewFeatureForm) => {
-    await axios.post('/api/features', form)
-    history.push('/')
-  }
+    await axios.post("/api/features", form);
+    history.push("/");
+  };
 
   return (
     <>
@@ -59,7 +59,7 @@ const NewFeaturePage: React.FC = () => {
           </label>
 
           <SimpleMDE
-            onChange={value => setValue('description', value)}
+            onChange={value => setValue("description", value)}
             options={{ spellChecker: false, status: false }}
           />
         </div>
@@ -71,7 +71,7 @@ const NewFeaturePage: React.FC = () => {
         </div>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default NewFeaturePage
+export default NewFeaturePage;
