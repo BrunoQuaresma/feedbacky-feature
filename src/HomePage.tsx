@@ -33,7 +33,12 @@ const FeaturesPage: React.FC = () => {
                 key={feature.id}
                 className="p-6 rounded-lg bg-white shadow mb-2 md:max-w-xs md:inline-block md:w-full sm:mr-2"
               >
-                <h3 className="text-lg font-medium">{feature.name}</h3>
+                <Link
+                  to={`/features/${feature.id}`}
+                  className="text-lg font-medium"
+                >
+                  {feature.name}
+                </Link>
                 <p className="text-sm text-gray-700 truncate">
                   {feature.description}
                 </p>

@@ -6,6 +6,7 @@ import NewSurveyPage from './NewSurveyPage'
 import LoginPage from './LoginPage'
 import IntegrationsPage from './IntegrationsPage'
 import SurveyPage from './SurveyPage'
+import FeaturePage from './FeaturePage'
 
 const App: React.FC = () => {
   return (
@@ -33,6 +34,7 @@ const App: React.FC = () => {
           <Route exact path="/" component={HomePage}></Route>
           <Route exact path="/login" component={LoginPage}></Route>
           <Route exact path="/features/new" component={NewFeaturePage}></Route>
+          <Route exact path="/features/:id" component={FeaturePage}></Route>
           <Route exact path="/surveys/new" component={NewSurveyPage}></Route>
           <Route exact path="/surveys/:id" component={SurveyPage}></Route>
           <Route
