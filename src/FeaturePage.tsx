@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { Feature } from './types'
+import useSWR from 'swr'
 
 type FeatureResponse = {
   feature: Feature
 }
 
-const FeaturePage: React.FC = () => {
-  const [feature, setFeature] = useState<Feature>()
-  const { id } = useParams()
+const getFeature = (id: string) =>
+  axios
+    .get<FeatureResponse>(`/api/features/${id}`)
+    .then(response => response.data.feature)
 
-  useEffect(() => {
-    axios.get<FeatureResponse>(`/api/features/${id}`).then(response => {
-      setFeature(response.data.feature)
-    })
-  }, [id])
+const FeaturePage: React.FC = () => {
+  const { id } = useParams()
+  const { data: feature } = useSWR([id, `/features/${id}`], getFeature)
 
   if (!feature) return <div>Loading...</div>
 

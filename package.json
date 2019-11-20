@@ -22,6 +22,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "react-simplemde-editor": "^4.1.0",
+    "swr": "^0.1.10",
     "typescript": "3.7.2",
     "use-clipboard-copy": "^0.1.1",
     "uuid": "^3.3.3",

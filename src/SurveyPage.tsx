@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useClipboard } from 'use-clipboard-copy'
 import axios from 'axios'
 import { Survey } from './types'
+import useSWR from 'swr'
 
 type SurveyResponse = {
   survey: Survey
 }
+
+const getSurvey = (id: string) =>
+  axios
+    .get<SurveyResponse>(`/api/surveys/${id}`)
+    .then(response => response.data.survey)
 
 const CODE_SNIPPET = `<script src="https://feedbacky.io/scripts/survey.js"></script>
 <script>
@@ -15,14 +21,8 @@ const CODE_SNIPPET = `<script src="https://feedbacky.io/scripts/survey.js"></scr
 
 const SurveyPage: React.FC = () => {
   const clipboard = useClipboard()
-  const [survey, setSurvey] = useState<Survey>()
   const { id } = useParams()
-
-  useEffect(() => {
-    axios.get<SurveyResponse>(`/api/surveys/${id}`).then(response => {
-      setSurvey(response.data.survey)
-    })
-  }, [id])
+  const { data: survey } = useSWR([id, `/surveys/${id}`], getSurvey)
 
   if (!survey) return <div>Loading...</div>
 

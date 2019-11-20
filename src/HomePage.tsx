@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { FeaturesResponse, SurveysResponse, Feature, Survey } from './types'
+import { SurveysResponse } from './types'
 import CardPlaceholder from './CardPlaceholder'
+import useSWR from 'swr'
+import { getFeatures } from './api'
+
+const getSurveys = () =>
+  axios
+    .get<SurveysResponse>('/api/surveys')
+    .then(response => response.data.surveys)
 
 const FeaturesPage: React.FC = () => {
-  const [features, setFeatures] = useState<Feature[]>()
-  const [surveys, setSurveys] = useState<Survey[]>()
-
-  useEffect(() => {
-    axios
-      .get<FeaturesResponse>('/api/features')
-      .then(response => setFeatures(response.data.features))
-
-    axios
-      .get<SurveysResponse>('/api/surveys')
-      .then(response => setSurveys(response.data.surveys))
-  }, [])
+  const { data: features } = useSWR('/features', getFeatures)
+  const { data: surveys } = useSWR('/surveys', getSurveys)
 
   return (
     <>

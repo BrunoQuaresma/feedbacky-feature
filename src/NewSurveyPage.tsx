@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import useForm from 'react-hook-form'
 import { useHistory } from 'react-router'
-import { Feature, FeaturesResponse } from './types'
+import useSWR from 'swr'
+import { getFeatures } from './api'
 
 type NewSurveyForm = {
   name: string
@@ -12,18 +13,12 @@ type NewSurveyForm = {
 const NewSurveyPage: React.FC = () => {
   const { register, handleSubmit } = useForm<NewSurveyForm>()
   const history = useHistory()
-  const [features, setFeatures] = useState<Feature[]>()
+  const { data: features } = useSWR('/features', getFeatures)
   const [selectedFeatureId, setSelectedFeatureId] = useState<string>('')
   const [selectedFeatureIds, setSelectedFeatureIds] = useState<string[]>([])
   const availableFeatures = features
     ? features.filter(feature => !selectedFeatureIds.includes(feature.id))
     : []
-
-  useEffect(() => {
-    axios
-      .get<FeaturesResponse>('/api/features')
-      .then(response => setFeatures(response.data.features))
-  }, [])
 
   const onSubmit = async (form: NewSurveyForm) => {
     const { data } = await axios.post('/api/surveys', form)
