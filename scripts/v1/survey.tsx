@@ -16,7 +16,6 @@ type FeedbackyConfig = {
 type SurveyProps = {
   id: string
   voterId: string
-  token: string
 }
 
 type Feature = {
@@ -38,7 +37,7 @@ const getVoterId = (): string => {
   return voterId
 }
 
-const Survey: React.FC<SurveyProps> = ({ id, token, voterId }) => {
+const Survey: React.FC<SurveyProps> = ({ id, voterId }) => {
   const [survey, setSurvey] = useState<{
     features: Feature[]
   }>()
@@ -49,21 +48,19 @@ const Survey: React.FC<SurveyProps> = ({ id, token, voterId }) => {
       {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          'Content-Type': 'application/json'
         }
       }
     )
       .then(response => response.json())
       .then(response => setSurvey(response.survey))
-  }, [id, token, voterId])
+  }, [id, voterId])
 
   const vote = (feature: Feature) => {
     fetch(`http://localhost:3000/api/public/surveys/${id}/vote`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         voter_id: voterId,
@@ -95,7 +92,7 @@ const Survey: React.FC<SurveyProps> = ({ id, token, voterId }) => {
 }
 
 window.feedbacky = {
-  renderSurveys: ({ apiToken, voterId }: FeedbackyConfig) => {
+  renderSurveys: ({ voterId }: FeedbackyConfig) => {
     document.onreadystatechange = () => {
       if (document.readyState !== 'complete') return
 
@@ -109,11 +106,7 @@ window.feedbacky = {
         }
 
         ReactDOM.render(
-          <Survey
-            id={surveyId}
-            token={apiToken}
-            voterId={voterId || getVoterId()}
-          />,
+          <Survey id={surveyId} voterId={voterId || getVoterId()} />,
           container
         )
       })

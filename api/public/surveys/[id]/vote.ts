@@ -18,27 +18,25 @@ type VoteParams = {
 
 export default async (req: NowRequest, res: NowResponse) => {
   res.setHeader('access-control-allow-origin', '*')
-  res.setHeader('access-control-allow-headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+  res.setHeader(
+    'access-control-allow-headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  )
 
-  if(req.method === 'OPTIONS') {
+  if (req.method === 'OPTIONS') {
     return res.status(200).end()
-  }
-
-  const apiTokenValue = req.headers.authorization?.replace('Bearer ', '')
-
-  if(!apiTokenValue) {
-    return res.status(400).json({
-      message: 'API Token not found on Authorization header.'
-    }).end()
   }
 
   const { id } = req.query
   const { voter_id, feature_id }: VoteParams = req.body
-  
-  if(!voter_id) {
-    return res.status(400).json({
-      message: 'voter_id not found.'
-    }).end()
+
+  if (!voter_id) {
+    return res
+      .status(400)
+      .json({
+        message: 'voter_id not found.'
+      })
+      .end()
   }
 
   const [, survey] = await db.query<[any, SurveyDoc]>([
