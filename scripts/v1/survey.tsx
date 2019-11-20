@@ -44,7 +44,7 @@ const Survey: React.FC<SurveyProps> = ({ id, voterId }) => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:3000/api/public/surveys/${id}?voter_id=${voterId}`,
+      `${process.env.PUBLIC_URL}/api/public/surveys/${id}?voter_id=${voterId}`,
       {
         method: 'GET',
         headers: {
@@ -57,7 +57,7 @@ const Survey: React.FC<SurveyProps> = ({ id, voterId }) => {
   }, [id, voterId])
 
   const vote = (feature: Feature) => {
-    fetch(`http://localhost:3000/api/public/surveys/${id}/vote`, {
+    fetch(`${process.env.PUBLIC_URL}/api/public/surveys/${id}/vote`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
