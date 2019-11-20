@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useClipboard } from 'use-clipboard-copy'
 import axios from 'axios'
 import { Survey } from './types'
 
@@ -13,6 +14,7 @@ const CODE_SNIPPET = `<script src="https://feedbacky.io/scripts/survey.js"></scr
 </script>`
 
 const SurveyPage: React.FC = () => {
+  const clipboard = useClipboard()
   const [survey, setSurvey] = useState<Survey>()
   const { id } = useParams()
 
@@ -36,18 +38,26 @@ const SurveyPage: React.FC = () => {
             </h2>
 
             <div className="p-6 rounded-lg bg-white shadow mb-2">
-              <h3 className="text-2xl mb-4">Add this survey on your page</h3>
+              <h3 className="text-2xl mb-4">Add this survey to your page</h3>
 
               <section className="mb-4">
                 <h4 className="mb-1">
                   1. Add this element where you want to display the survey.
                 </h4>
-                <code className="p-4 rounded bg-gray-200 block text-sm">
-                  <pre> {`<div data-survey="${survey.id}"></div>`}</pre>
+                <code className="p-3 rounded bg-gray-200 block text-sm text-gray-700 relative">
+                  <pre>{`<div data-survey="${survey.id}"></div>`}</pre>
+                  <button
+                    onClick={() =>
+                      clipboard.copy(`<div data-survey="${survey.id}"></div>`)
+                    }
+                    className="absolute right-0 bottom-0 p-3"
+                  >
+                    <i className="far fa-copy"></i>
+                  </button>
                 </code>
               </section>
 
-              <section>
+              <section className="mb-4">
                 <h4 className="mb-1">
                   2. Include this script before{' '}
                   <span className="bg-gray-200 inline-block text-sm px-1 rounded text-gray-700">
@@ -55,9 +65,21 @@ const SurveyPage: React.FC = () => {
                   </span>
                   .
                 </h4>
-                <code className="p-4 rounded bg-gray-200 block text-sm">
+                <code className="p-3 rounded bg-gray-200 block text-sm text-gray-700 relative">
                   <pre>{CODE_SNIPPET}</pre>
+                  <button
+                    onClick={() => clipboard.copy(CODE_SNIPPET)}
+                    className="absolute right-0 bottom-0 p-3"
+                  >
+                    <i className="far fa-copy"></i>
+                  </button>
                 </code>
+              </section>
+
+              <section>
+                <h4 className="mb-1">
+                  3. Check if your survey is rendered right.
+                </h4>
               </section>
             </div>
           </section>
