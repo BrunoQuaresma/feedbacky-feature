@@ -41,7 +41,7 @@ const SurveyPage: React.FC = () => {
               <h3 className="text-2xl mb-4">Add this survey to your page</h3>
 
               <section className="mb-4">
-                <h4 className="mb-1">
+                <h4 className="mb-2">
                   1. Add this element where you want to display the survey.
                 </h4>
                 <code className="p-3 rounded bg-gray-200 block text-sm text-gray-700 relative">
@@ -58,7 +58,7 @@ const SurveyPage: React.FC = () => {
               </section>
 
               <section className="mb-4">
-                <h4 className="mb-1">
+                <h4 className="mb-2">
                   2. Include this script before{' '}
                   <span className="bg-gray-200 inline-block text-sm px-1 rounded text-gray-700">
                     {'</body>'}
@@ -77,9 +77,7 @@ const SurveyPage: React.FC = () => {
               </section>
 
               <section>
-                <h4 className="mb-1">
-                  3. Check if your survey is rendered right.
-                </h4>
+                <h4>3. Check if your survey is rendered right.</h4>
               </section>
             </div>
           </section>
