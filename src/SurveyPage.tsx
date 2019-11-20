@@ -7,6 +7,11 @@ type SurveyResponse = {
   survey: Survey
 }
 
+const CODE_SNIPPET = `<script src="https://feedbacky.io/scripts/survey.js"></script>
+<script>
+  window.feedbacky.renderSurveys()
+</script>`
+
 const SurveyPage: React.FC = () => {
   const [survey, setSurvey] = useState<Survey>()
   const { id } = useParams()
@@ -22,27 +27,67 @@ const SurveyPage: React.FC = () => {
   return (
     survey && (
       <>
-        <h1 className="text-2xl mb-4">{survey.name}</h1>
+        <h1 className="text-2xl mb-6">{survey.name}</h1>
 
-        {survey.features.map(feature => (
-          <div
-            key={feature.id}
-            className="rounded-lg bg-white shadow mb-2 md:max-w-xs md:inline-block md:w-full sm:mr-2"
-          >
-            <div className="p-6">
-              <h3 className="text-lg font-medium">{feature.name}</h3>
-              <p className="text-sm text-gray-700 truncate">
-                {feature.description}
-              </p>
+        {survey.number_of_votes === 0 && (
+          <section className="mb-6">
+            <h2 className="uppercase text-sm font-medium text-gray-700 mb-2">
+              Next steps
+            </h2>
+
+            <div className="p-6 rounded-lg bg-white shadow mb-2">
+              <h3 className="text-2xl mb-4">Add this survey on your page</h3>
+
+              <section className="mb-4">
+                <h4 className="mb-1">
+                  1. Add this element where you want to display the survey.
+                </h4>
+                <code className="p-4 rounded bg-gray-200 block text-sm">
+                  <pre> {`<div data-survey="${survey.id}"></div>`}</pre>
+                </code>
+              </section>
+
+              <section>
+                <h4 className="mb-1">
+                  2. Include this script before{' '}
+                  <span className="bg-gray-200 inline-block text-sm px-1 rounded text-gray-700">
+                    {'</body>'}
+                  </span>
+                  .
+                </h4>
+                <code className="p-4 rounded bg-gray-200 block text-sm">
+                  <pre>{CODE_SNIPPET}</pre>
+                </code>
+              </section>
             </div>
-            <div className="px-6 py-2 bg-gray-100 text-xs font-medium text-gray-700">
-              <small className="mr-1 text-indigo-500">
-                <i className="fas fa-heart"></i>
-              </small>
-              {feature.number_of_votes} votes
+          </section>
+        )}
+
+        <section>
+          <h2 className="uppercase text-sm font-medium text-gray-700 mb-2">
+            Features
+          </h2>
+
+          {survey.features.map(feature => (
+            <div
+              key={feature.id}
+              className="rounded-lg bg-white shadow mb-2 md:max-w-xs md:inline-block md:w-full sm:mr-2"
+            >
+              <div className="p-6">
+                <h3 className="text-lg font-medium">{feature.name}</h3>
+                <p className="text-sm text-gray-700 truncate">
+                  {feature.description}
+                </p>
+              </div>
+              <div className="px-6 py-2 bg-gray-100 text-xs font-medium text-gray-700">
+                <small className="mr-1 text-indigo-500">
+                  <i className="fas fa-heart"></i>
+                </small>
+                {feature.number_of_votes} votes
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </section>
       </>
     )
   )
