@@ -14,7 +14,7 @@ const getSurvey = (id: string) =>
     .get<SurveyResponse>(`/api/surveys/${id}`)
     .then(response => response.data.survey)
 
-const CODE_SNIPPET = `<script src="${process.env.REACT_APP_PUBLIC_URL}/scripts/survey.js"></script>
+const CODE_SNIPPET = `<script src="${process.env.REACT_APP_PUBLIC_URL}/survey.js"></script>
 <script>
   window.feedbacky.renderSurveys()
 </script>`

@@ -9,7 +9,6 @@ declare global {
 }
 
 type FeedbackyConfig = {
-  apiToken: string
   voterId?: string
 }
 
@@ -92,7 +91,7 @@ const Survey: React.FC<SurveyProps> = ({ id, voterId }) => {
 }
 
 window.feedbacky = {
-  renderSurveys: ({ voterId }: FeedbackyConfig) => {
+  renderSurveys: ({ voterId }: FeedbackyConfig = {}) => {
     document.onreadystatechange = () => {
       if (document.readyState !== 'complete') return
 
