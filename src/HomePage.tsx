@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { FeaturesResponse, SurveysResponse, Feature, Survey } from './types'
+import CardPlaceholder from './CardPlaceholder'
 
 const FeaturesPage: React.FC = () => {
   const [features, setFeatures] = useState<Feature[]>()
@@ -24,7 +25,13 @@ const FeaturesPage: React.FC = () => {
           Features
         </h1>
 
-        {!features && <div>Loading...</div>}
+        {!features && (
+          <>
+            <CardPlaceholder></CardPlaceholder>
+            <CardPlaceholder></CardPlaceholder>
+            <CardPlaceholder></CardPlaceholder>
+          </>
+        )}
 
         <div>
           {features &&
@@ -59,7 +66,13 @@ const FeaturesPage: React.FC = () => {
           Surveys
         </h1>
 
-        {!surveys && <div>Loading...</div>}
+        {!surveys && (
+          <>
+            <CardPlaceholder></CardPlaceholder>
+            <CardPlaceholder></CardPlaceholder>
+            <CardPlaceholder></CardPlaceholder>
+          </>
+        )}
 
         <div>
           {surveys &&
