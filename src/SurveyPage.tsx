@@ -1,9 +1,10 @@
 import React from 'react'
+import axios from 'axios'
+import useSWR from 'swr'
 import { useParams } from 'react-router-dom'
 import { useClipboard } from 'use-clipboard-copy'
-import axios from 'axios'
 import { Survey } from './types'
-import useSWR from 'swr'
+import SurveyChart from './SurveyChart'
 
 type SurveyResponse = {
   survey: Survey
@@ -21,7 +22,7 @@ const CODE_SNIPPET = `<script src="${process.env.REACT_APP_PUBLIC_URL}/survey.js
 
 const SurveyPage: React.FC = () => {
   const clipboard = useClipboard()
-  const { id } = useParams()
+  const { id } = useParams<{ id: string }>()
   const { data: survey } = useSWR([id, `/surveys/${id}`], getSurvey)
 
   if (!survey) return <div>Loading...</div>
@@ -79,6 +80,21 @@ const SurveyPage: React.FC = () => {
               <section>
                 <h4>3. Check if your survey is rendered right.</h4>
               </section>
+            </div>
+          </section>
+        )}
+
+        {survey.number_of_votes > 0 && (
+          <section className="mb-8">
+            <h2 className="uppercase text-sm font-medium text-gray-700 mb-2">
+              Analytics
+            </h2>
+
+            <div
+              className="rounded-lg bg-white shadow p-6"
+              style={{ height: '24rem' }}
+            >
+              <SurveyChart surveyId={id} />
             </div>
           </section>
         )}
