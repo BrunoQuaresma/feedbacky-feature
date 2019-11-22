@@ -164,8 +164,11 @@ const SurveyPage: React.FC = () => {
                   Analytics
                 </h2>
 
-                <span className="ml-2 inline-block bg-teal-200 font-medium uppercase rounded-full text-xs px-2 text-teal-900">
-                  Coming soon
+                <span className="ml-2 inline-block bg-teal-200 font-medium uppercase rounded-full text-xs px-3 py-1 text-teal-900">
+                  Coming soon{' '}
+                  <span className="font-medium inline-block bg-teal-700 text-teal-100 px-2 rounded-full ml-1 -mr-2">
+                    PRO
+                  </span>
                 </span>
               </div>
 
@@ -175,15 +178,11 @@ const SurveyPage: React.FC = () => {
                 </div>
 
                 <div className="ml-4">
-                  <h3 className="text-2xl leading-none mb-3 font-medium">
-                    Analytics for survey
-                  </h3>
+                  <h3 className="text-2xl font-medium">Analytics for survey</h3>
                   <p className="text-lg flex-1">
                     Analyse votes per day and specific dates.
                   </p>
-                  <p className="mt-1 text-sm">
-                    *Only available for PRO accounts.
-                  </p>
+                  <p className="text-sm mt-2">*Only for pro accounts</p>
                 </div>
               </div>
             </div>
