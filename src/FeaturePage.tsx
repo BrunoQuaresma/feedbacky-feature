@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { Feature } from './types'
 import useSWR from 'swr'
+import Loading from './Loading'
 
 type FeatureResponse = {
   feature: Feature
@@ -17,7 +18,7 @@ const FeaturePage: React.FC = () => {
   const { id } = useParams()
   const { data: feature } = useSWR([id, `/features/${id}`], getFeature)
 
-  if (!feature) return <div>Loading...</div>
+  if (!feature) return <Loading></Loading>
 
   return (
     feature && (

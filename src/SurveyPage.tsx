@@ -6,6 +6,7 @@ import { useClipboard } from 'use-clipboard-copy'
 import { Survey, Feature } from './types'
 import sumBy from 'lodash/sumBy'
 import orderBy from 'lodash/orderBy'
+import Loading from './Loading'
 
 type SurveyResponse = {
   survey: Survey
@@ -38,7 +39,7 @@ const SurveyPage: React.FC = () => {
   const calcVotePercentage = (numberOfVotes: number) =>
     (100 * numberOfVotes) / totalVotes
 
-  if (!survey) return <div>Loading...</div>
+  if (!survey) return <Loading></Loading>
 
   return (
     survey && (
