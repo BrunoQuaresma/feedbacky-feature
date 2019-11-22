@@ -13,7 +13,9 @@ const App: React.FC = () => {
     <Router>
       <header className="bg-indigo-500 text-indigo-200 shadow-md">
         <div className="container mx-auto px-2 py-3 flex items-baseline sm:py-0">
-          <span className="font-medium text-xl text-white">feedbacky</span>
+          <Link to="/" className="font-medium text-xl text-white">
+            feedbacky
+          </Link>
           <nav className="hidden sm:block ml-4">
             <Link className="inline-block px-2 py-4 text-white" to="/">
               Dashboard

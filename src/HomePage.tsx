@@ -44,7 +44,7 @@ const FeaturesPage: React.FC = () => {
                   {feature.name}
                 </Link>
                 <p className="text-sm text-gray-700 truncate">
-                  {feature.description}
+                  {feature.description || 'No description provided'}
                 </p>
               </div>
             ))}
