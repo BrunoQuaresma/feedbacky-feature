@@ -23,29 +23,37 @@ const FeaturesPage: React.FC = () => {
         </h1>
 
         {!features && (
-          <>
-            <CardPlaceholder></CardPlaceholder>
-            <CardPlaceholder></CardPlaceholder>
-            <CardPlaceholder></CardPlaceholder>
-          </>
+          <div className="flex flex-wrap -mx-1">
+            <div className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2">
+              <CardPlaceholder></CardPlaceholder>
+            </div>
+            <div className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2">
+              <CardPlaceholder></CardPlaceholder>
+            </div>
+            <div className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2">
+              <CardPlaceholder></CardPlaceholder>
+            </div>
+          </div>
         )}
 
-        <div>
+        <div className="flex flex-wrap -mx-1">
           {features &&
             features.map(feature => (
               <div
+                className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2"
                 key={feature.id}
-                className="p-6 rounded-lg bg-white shadow mb-2 md:max-w-xs md:inline-block md:w-full sm:mr-2"
               >
-                <Link
-                  to={`/features/${feature.id}`}
-                  className="text-lg font-medium"
-                >
-                  {feature.name}
-                </Link>
-                <p className="text-sm text-gray-700 truncate">
-                  {feature.description || 'No description provided'}
-                </p>
+                <div className="p-6 rounded-lg bg-white shadow h-full">
+                  <Link
+                    to={`/features/${feature.id}`}
+                    className="text-lg font-medium"
+                  >
+                    {feature.name}
+                  </Link>
+                  <p className="text-sm text-gray-700 truncate">
+                    {feature.description || 'No description provided'}
+                  </p>
+                </div>
               </div>
             ))}
         </div>
@@ -64,44 +72,52 @@ const FeaturesPage: React.FC = () => {
         </h1>
 
         {!surveys && (
-          <>
-            <CardPlaceholder></CardPlaceholder>
-            <CardPlaceholder></CardPlaceholder>
-            <CardPlaceholder></CardPlaceholder>
-          </>
+          <div className="flex flex-wrap -mx-1">
+            <div className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2">
+              <CardPlaceholder></CardPlaceholder>
+            </div>
+            <div className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2">
+              <CardPlaceholder></CardPlaceholder>
+            </div>
+            <div className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2">
+              <CardPlaceholder></CardPlaceholder>
+            </div>
+          </div>
         )}
 
-        <div>
+        <div className="flex flex-wrap -mx-1">
           {surveys &&
             surveys.map(survey => (
               <div
+                className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2"
                 key={survey.id}
-                className="rounded-lg bg-white shadow mb-2 md:max-w-xs md:inline-block md:w-full sm:mr-2"
               >
-                <div className="p-6">
-                  <Link
-                    className="text-lg font-medium mb-2 block"
-                    to={`/surveys/${survey.id}`}
-                  >
-                    {survey.name}
-                  </Link>
+                <div className="rounded-lg bg-white shadow h-full">
+                  <div className="p-6">
+                    <Link
+                      className="text-lg font-medium mb-2 block"
+                      to={`/surveys/${survey.id}`}
+                    >
+                      {survey.name}
+                    </Link>
 
-                  <div className="truncate">
-                    {survey.features.map(feature => (
-                      <div
-                        key={feature.id}
-                        className="bg-indigo-100 text-white inline-block text-indigo-700 text-xs font-medium px-2 py-1 rounded mb-1 mr-1"
-                      >
-                        {feature.name}
-                      </div>
-                    ))}
+                    <div className="truncate">
+                      {survey.features.map(feature => (
+                        <div
+                          key={feature.id}
+                          className="bg-indigo-100 text-white inline-block text-indigo-700 text-xs font-medium px-2 py-1 rounded mb-1 mr-1"
+                        >
+                          {feature.name}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="px-6 py-2 bg-gray-100 text-xs font-medium text-gray-700">
-                  <small className="mr-1 text-indigo-500">
-                    <i className="fas fa-heart"></i>
-                  </small>
-                  {survey.number_of_votes} votes
+                  <div className="px-6 py-2 bg-gray-100 text-xs font-medium text-gray-700">
+                    <small className="mr-1 text-indigo-500">
+                      <i className="fas fa-heart"></i>
+                    </small>
+                    {survey.number_of_votes} votes
+                  </div>
                 </div>
               </div>
             ))}
