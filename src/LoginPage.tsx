@@ -86,7 +86,7 @@ const LoginPage: React.FC = () => {
 
           <div className="mt-4">
             <LoadingButton size="sm" block isLoading={isLoading}>
-              Loading
+              Login
             </LoadingButton>
 
             <Link

@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
 import { mutate } from 'swr'
+import LoadingButton from './LoadingButton'
 
 const removeToken = () => axios.delete('/api/token')
 
 const Topbar: React.FC = () => {
   const history = useHistory()
+  const [isLoginOut, setIsLoginOut] = useState(false)
 
   const handleLogout = async () => {
+    console.log('LOADINF')
+    setIsLoginOut(true)
     await removeToken()
     mutate('/features', null)
     mutate('/surveys', null)
@@ -31,7 +35,9 @@ const Topbar: React.FC = () => {
         </nav>
 
         <nav className="hidden sm:block ml-auto">
-          <button onClick={handleLogout}>Logout</button>
+          <LoadingButton isLoading={isLoginOut} onClick={handleLogout}>
+            Logout
+          </LoadingButton>
         </nav>
       </div>
     </header>
