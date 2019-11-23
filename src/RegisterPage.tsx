@@ -9,18 +9,12 @@ type LoginForm = {
   password: string
 }
 
-type TokenResponse = {
-  token: string
-}
-
-const TOKEN_URL = '/api/token'
-
-const LoginPage: React.FC = () => {
+const RegisterPage: React.FC = () => {
   const { register, handleSubmit } = useForm<LoginForm>()
   const history = useHistory()
 
   const onSubmit = async (form: LoginForm) => {
-    await axios.post<TokenResponse>(TOKEN_URL, form)
+    await axios.post('/api/users', form)
     history.push('/')
   }
 
@@ -60,22 +54,39 @@ const LoginPage: React.FC = () => {
             <input
               required
               name="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               type="password"
               ref={register}
               className="bg-white px-3 py-2 block w-full rounded border border-solid border-gray-300 outline-none"
             />
           </div>
 
+          <div className="mb-3">
+            <label
+              className="block font-medium text-sm text-gray-700 mb-2"
+              htmlFor=""
+            >
+              Confirm password
+            </label>
+            <input
+              required
+              name="confirm-password"
+              type="password"
+              ref={register}
+              autoComplete="off"
+              className="bg-white px-3 py-2 block w-full rounded border border-solid border-gray-300 outline-none"
+            />
+          </div>
+
           <div>
             <button className="shadow bg-indigo-500 text-white w-full rounded-full py-2 px-4 text-sm font-medium uppercase mt-2">
-              Login
+              Register
             </button>
             <Link
               className="text-center mt-4 text-indigo-500 block"
-              to="/register"
+              to="/login"
             >
-              I don't have an account yet.
+              I already have an account.
             </Link>
           </div>
         </form>
@@ -84,4 +95,4 @@ const LoginPage: React.FC = () => {
   )
 }
 
-export default LoginPage
+export default RegisterPage
