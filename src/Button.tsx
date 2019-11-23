@@ -29,6 +29,7 @@ export const getButtonClassName = ({
     'px-4',
     'font-medium',
     'uppercase',
+    'focus:outline-none',
     className
   ].join(' ')
 

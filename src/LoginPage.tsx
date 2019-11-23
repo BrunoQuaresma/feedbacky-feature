@@ -4,6 +4,7 @@ import useForm from 'react-hook-form'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import Button from './Button'
+import Input from './Input'
 
 type LoginForm = {
   email: string
@@ -40,14 +41,13 @@ const LoginPage: React.FC = () => {
             >
               Email
             </label>
-            <input
+            <Input
               autoFocus
               required
               name="email"
               autoComplete="username"
               type="email"
               ref={register}
-              className="bg-white px-3 py-2 block w-full rounded border border-solid border-gray-300 outline-none"
             />
           </div>
 
@@ -58,13 +58,12 @@ const LoginPage: React.FC = () => {
             >
               Password
             </label>
-            <input
+            <Input
               required
               name="password"
               autoComplete="current-password"
               type="password"
               ref={register}
-              className="bg-white px-3 py-2 block w-full rounded border border-solid border-gray-300 outline-none"
             />
           </div>
 
