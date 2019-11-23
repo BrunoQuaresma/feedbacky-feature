@@ -18,12 +18,20 @@ type TokenResponse = {
 const TOKEN_URL = '/api/token'
 
 const LoginPage: React.FC = () => {
-  const { register, handleSubmit } = useForm<LoginForm>()
+  const { register, handleSubmit, setError, errors } = useForm<LoginForm>()
   const history = useHistory()
 
   const onSubmit = async (form: LoginForm) => {
-    await axios.post<TokenResponse>(TOKEN_URL, form)
-    history.push('/')
+    try {
+      await axios.post<TokenResponse>(TOKEN_URL, form)
+      history.push('/')
+    } catch (error) {
+      if (!error.response || error.response.status !== 401) {
+        throw error
+      }
+
+      setError('password', 'invalid', 'Email or password is invalid.')
+    }
   }
 
   return (
@@ -65,6 +73,11 @@ const LoginPage: React.FC = () => {
               type="password"
               ref={register}
             />
+            {errors && errors.password && (
+              <p className="text-sm text-red-600 mt-2">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <div className="mt-4">

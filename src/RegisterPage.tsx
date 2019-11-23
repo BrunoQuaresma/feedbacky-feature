@@ -12,12 +12,20 @@ type LoginForm = {
 }
 
 const RegisterPage: React.FC = () => {
-  const { register, handleSubmit } = useForm<LoginForm>()
+  const { register, handleSubmit, setError, errors } = useForm<LoginForm>()
   const history = useHistory()
 
   const onSubmit = async (form: LoginForm) => {
-    await axios.post('/api/users', form)
-    history.push('/')
+    try {
+      await axios.post('/api/users', form)
+      history.push('/')
+    } catch (error) {
+      if (!error.response || error.response.status !== 400) {
+        throw error
+      }
+
+      setError('email', 'invalid', 'Email has already been taken.')
+    }
   }
 
   return (
@@ -43,6 +51,11 @@ const RegisterPage: React.FC = () => {
               type="email"
               ref={register}
             />
+            {errors && errors.email && (
+              <p className="text-sm text-red-600 mt-2">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div className="mb-3">
