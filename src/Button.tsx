@@ -10,20 +10,23 @@ export type ButtonProps = {
 const getOutLineClassNames = (color?: string) =>
   `border border-solid border-${color}-500 text-${color}-700 hover:bg-${color}-100`
 
-const getFlatClassNames = (color?: string) =>
-  `shadow bg-${color}-500 hover:bg-${color}-600 text-white`
+const getFlatClassNames = (color?: string, disabled?: boolean) =>
+  disabled
+    ? `shadow bg-${color}-400 text-white cursor-default`
+    : `shadow bg-${color}-500 hover:bg-${color}-600 text-white`
 
 export const getButtonClassName = ({
   color,
   size,
   block,
   outline,
-  className
+  className,
+  disabled
 }: ButtonProps) =>
   [
     `text-${size}`,
     block ? 'block w-full' : 'inline-block',
-    outline ? getOutLineClassNames(color) : getFlatClassNames(color),
+    outline ? getOutLineClassNames(color) : getFlatClassNames(color, disabled),
     'rounded-full',
     'py-2',
     'px-4',

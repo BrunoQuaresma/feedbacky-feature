@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import useForm from 'react-hook-form'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
-import Button from './Button'
 import Input from './Input'
+import LoadingButton from './LoadingButton'
 
 type LoginForm = {
   email: string
@@ -20,12 +20,16 @@ const TOKEN_URL = '/api/token'
 const LoginPage: React.FC = () => {
   const { register, handleSubmit, setError, errors } = useForm<LoginForm>()
   const history = useHistory()
+  const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit = async (form: LoginForm) => {
     try {
+      setIsLoading(true)
       await axios.post<TokenResponse>(TOKEN_URL, form)
       history.push('/')
     } catch (error) {
+      setIsLoading(false)
+
       if (!error.response || error.response.status !== 401) {
         throw error
       }
@@ -81,9 +85,10 @@ const LoginPage: React.FC = () => {
           </div>
 
           <div className="mt-4">
-            <Button size="sm" block>
-              Login
-            </Button>
+            <LoadingButton size="sm" block isLoading={isLoading}>
+              Loading
+            </LoadingButton>
+
             <Link
               className="text-center mt-4 text-indigo-500 block"
               to="/register"
