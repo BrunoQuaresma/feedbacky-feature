@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
-import { trigger } from 'swr'
+import { mutate } from 'swr'
 
 const removeToken = () => axios.delete('/api/token')
 
@@ -10,8 +10,8 @@ const Topbar: React.FC = () => {
 
   const handleLogout = async () => {
     await removeToken()
-    trigger('/features')
-    trigger('/surveys')
+    mutate('/features', null)
+    mutate('/surveys', null)
     history.push('/login')
   }
 

@@ -3,6 +3,7 @@ import axios from 'axios'
 import useForm from 'react-hook-form'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
+import Button from './Button'
 
 type LoginForm = {
   email: string
@@ -67,10 +68,10 @@ const LoginPage: React.FC = () => {
             />
           </div>
 
-          <div>
-            <button className="shadow bg-indigo-500 text-white w-full rounded-full py-2 px-4 text-sm font-medium uppercase mt-2">
+          <div className="mt-4">
+            <Button size="sm" block>
               Login
-            </button>
+            </Button>
             <Link
               className="text-center mt-4 text-indigo-500 block"
               to="/register"

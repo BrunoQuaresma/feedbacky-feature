@@ -5,6 +5,7 @@ import { SurveysResponse } from './types'
 import CardPlaceholder from './CardPlaceholder'
 import useSWR from 'swr'
 import { getFeatures } from './api'
+import LinkButton from './LinkButton'
 
 const getSurveys = () =>
   axios
@@ -51,12 +52,9 @@ const FeaturesPage: React.FC = () => {
                 track your user preferences.
               </p>
 
-              <Link
-                to="/features/new"
-                className="shadow bg-indigo-500 text-white inline-block rounded-full py-2 px-4 text-xs font-medium uppercase mt-2"
-              >
+              <LinkButton to="/features/new" className="mt-2">
                 Create feature
-              </Link>
+              </LinkButton>
             </div>
           </div>
         )}
@@ -84,12 +82,9 @@ const FeaturesPage: React.FC = () => {
         </div>
 
         {features && features.length > 0 && (
-          <Link
-            to="/features/new"
-            className="shadow bg-indigo-500 text-white inline-block rounded-full py-2 px-4 text-xs font-medium uppercase mt-2"
-          >
+          <LinkButton to="/features/new" className="mt-2">
             New feature
-          </Link>
+          </LinkButton>
         )}
       </section>
 
@@ -111,12 +106,9 @@ const FeaturesPage: React.FC = () => {
                   To create your first survey you need to have two features at
                   least.
                 </p>
-                <Link
-                  to="/features/new"
-                  className="border border-solid border-indigo-500 text-indigo-700 inline-block rounded-full py-2 px-4 text-xs font-medium uppercase mt-2"
-                >
+                <LinkButton to="/features/new" className="mt-2">
                   Create feature
-                </Link>
+                </LinkButton>
               </div>
             </div>
           )}
@@ -137,12 +129,9 @@ const FeaturesPage: React.FC = () => {
                       Create your first survey to track your user preferences.
                     </p>
 
-                    <Link
-                      to="/surveys/new"
-                      className="shadow bg-indigo-500 text-white inline-block rounded-full py-2 px-4 text-xs font-medium uppercase mt-2"
-                    >
+                    <LinkButton outline to="/surveys/new" className="mt-2">
                       Create survey
-                    </Link>
+                    </LinkButton>
                   </div>
                 </div>
               )}
@@ -187,12 +176,9 @@ const FeaturesPage: React.FC = () => {
           )}
 
           {surveys && surveys.length > 0 && (
-            <Link
-              className="border border-solid border-indigo-500 text-indigo-700 inline-block rounded-full py-2 px-4 text-xs font-medium uppercase mt-2"
-              to="/surveys/new"
-            >
+            <LinkButton outline to="/surveys/new" className="mt-2">
               New survey
-            </Link>
+            </LinkButton>
           )}
         </section>
       )}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import HomePage from './HomePage'
@@ -8,22 +8,25 @@ import IntegrationsPage from './IntegrationsPage'
 import SurveyPage from './SurveyPage'
 import FeaturePage from './FeaturePage'
 import Topbar from './Topbar'
-import useSWR from 'swr'
 import Loading from './Loading'
 
 const verifyToken = () => axios.get('/api/token')
 
 const DashboardApp: React.FC = () => {
-  const { data: token, error } = useSWR<any, AxiosError>('/token', verifyToken)
   const history = useHistory()
+  const [isVerifyingToken, setIsVerifyingToken] = useState(true)
 
   useEffect(() => {
-    if (error && error.response && error.response.status === 401) {
-      history.push('/login')
-    }
-  }, [error, history])
+    verifyToken()
+      .then(() => setIsVerifyingToken(false))
+      .catch((error: AxiosError) => {
+        if (error && error.response && error.response.status === 401) {
+          history.push('/login')
+        }
+      })
+  }, [history])
 
-  if (!token) {
+  if (isVerifyingToken) {
     return <Loading></Loading>
   }
 
