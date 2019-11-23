@@ -1,7 +1,7 @@
 import { NowRequest, NowResponse } from '@now/node'
 import { query as q } from 'faunadb'
 import cookie from 'cookie'
-import db from './_db'
+import db from '../_db'
 
 type Credentials = {
   email: string
@@ -40,5 +40,5 @@ export default async (req: NowRequest, res: NowResponse) => {
     })
   )
 
-  res.status(200).end()
+  res.status(201).end()
 }
