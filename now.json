@@ -1,0 +1,9 @@
+{
+  "build": {
+    "env": {
+      "FAUNADB_SERVER_SECRET": "@faunadb_server_secret",
+      "PUBLIC_URL": "@public_url",
+      "REACT_PUBLIC_URL": "@public_url"
+    }
+  }
+}
