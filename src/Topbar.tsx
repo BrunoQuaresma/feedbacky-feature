@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
-import { mutate } from 'swr'
+import { NavLink, useHistory } from 'react-router-dom'
+import { trigger } from 'swr'
 import LoadingButton from './LoadingButton'
 
 const removeToken = () => axios.delete('/api/token')
@@ -11,27 +11,35 @@ const Topbar: React.FC = () => {
   const [isLoginOut, setIsLoginOut] = useState(false)
 
   const handleLogout = async () => {
-    console.log('LOADINF')
     setIsLoginOut(true)
     await removeToken()
-    mutate('/features', null)
-    mutate('/surveys', null)
+    trigger('/features')
+    trigger('/surveys')
     history.push('/login')
   }
 
   return (
-    <header className="bg-indigo-500 text-indigo-200 shadow-md">
+    <header className="bg-indigo-500 text-indigo-200 shadow-md topbar">
       <div className="container mx-auto px-2 py-3 flex items-baseline sm:py-0">
-        <Link to="/" className="font-medium text-xl text-white">
+        <NavLink to="/" className="font-medium text-xl text-white">
           feedbacky
-        </Link>
+        </NavLink>
         <nav className="hidden sm:block ml-4">
-          <Link className="inline-block px-2 py-4 text-white" to="/">
+          <NavLink
+            className="inline-block px-2 py-4"
+            to="/"
+            isActive={(_, location) => location.pathname === '/'}
+          >
             Dashboard
-          </Link>
-          <Link className="inline-block px-2 py-4" to="/integrations">
+          </NavLink>
+
+          <NavLink
+            className="inline-block px-2 py-4"
+            to="/integrations"
+            isActive={(_, location) => location.pathname === '/integrations'}
+          >
             Integrations
-          </Link>
+          </NavLink>
         </nav>
 
         <nav className="hidden sm:block ml-auto">

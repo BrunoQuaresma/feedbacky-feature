@@ -32,6 +32,7 @@
     "uuid": "^3.3.3"
   },
   "scripts": {
+    "start": "now dev",
     "dev": "npm run dev:scripts && BROWSER=none react-scripts start",
     "dev:scripts": "NODE_ENV=production parcel build ./scripts/v1/survey.tsx -d ./public -o survey.js",
     "build": "react-scripts build",

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import LoginPage from './LoginPage'
 import DashboardApp from './DashboardApp'
 import RegisterPage from './RegisterPage'
+import './app.css'
 
 const App: React.FC = () => {
   return (
