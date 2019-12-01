@@ -9,5 +9,6 @@
       "PUBLIC_URL": "@public_url",
       "REACT_APP_PUBLIC_URL": "@public_url"
     }
-  }
+  },
+  "routes": [{ "src": "/(.*)$", "dest": "/index.html" }]
 }
