@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "name": "feedbacy-feature",
   "env": {
     "FAUNADB_SERVER_SECRET": "@faunadb_server_secret"
