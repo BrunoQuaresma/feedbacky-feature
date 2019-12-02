@@ -6,8 +6,8 @@
   },
   "build": {
     "env": {
-      "PUBLIC_URL": "@public_url",
-      "REACT_APP_PUBLIC_URL": "@public_url"
+      "SCRIPT_URL": "https://feedbacky-feature.now.sh",
+      "REACT_APP_SCRIPT_URL": "https://feedbacky-feature.now.sh"
     }
   },
   "routes": [{ "src": "/(.*)$", "dest": "/index.html" }]

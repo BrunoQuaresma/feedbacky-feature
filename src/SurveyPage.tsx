@@ -23,7 +23,7 @@ const calcTotalVotes = (survey: Survey) =>
 const orderByNumberOfVotes = (features: Feature[]) =>
   orderBy(features, ['number_of_votes'], ['desc'])
 
-const CODE_SNIPPET = `<script src="${process.env.REACT_APP_PUBLIC_URL}/survey.js"></script>
+const CODE_SNIPPET = `<script src="${process.env.REACT_APP_SCRIPT_URL}/survey.js"></script>
 <script>
   window.feedbacky.renderSurveys()
 </script>`
