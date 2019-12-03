@@ -7,6 +7,7 @@ import { Survey, Feature } from './types'
 import sumBy from 'lodash/sumBy'
 import orderBy from 'lodash/orderBy'
 import Loading from './Loading'
+import Helmet from 'react-helmet'
 
 type SurveyResponse = {
   survey: Survey
@@ -39,11 +40,23 @@ const SurveyPage: React.FC = () => {
   const calcVotePercentage = (numberOfVotes: number) =>
     (100 * numberOfVotes) / totalVotes
 
-  if (!survey) return <Loading></Loading>
+  if (!survey)
+    return (
+      <>
+        <Helmet>
+          <title>Loading survey... - Feedbacky</title>
+        </Helmet>
+        <Loading></Loading>
+      </>
+    )
 
   return (
     survey && (
       <>
+        <Helmet>
+          <title>{survey.name} - Feedbacky</title>
+        </Helmet>
+
         <h1 className="text-2xl mb-6">{survey.name}</h1>
 
         {survey.number_of_votes === 0 && (

@@ -4,6 +4,7 @@ import useForm from 'react-hook-form'
 import SimpleMDE from 'react-simplemde-editor'
 import 'easymde/dist/easymde.min.css'
 import { useHistory } from 'react-router'
+import Helmet from 'react-helmet'
 
 type NewFeatureForm = {
   name: string
@@ -28,6 +29,10 @@ const NewFeaturePage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>New Feature. - Feedbacky</title>
+      </Helmet>
+
       <h1 className="uppercase text-sm font-medium text-gray-700 mb-4">
         New Feature
       </h1>

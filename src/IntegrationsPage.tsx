@@ -1,8 +1,13 @@
 import React from 'react'
+import Helmet from 'react-helmet'
 
 const IntegrationsPage: React.FC = () => {
   return (
     <>
+      <Helmet>
+        <title>Integrations - Feedbacky</title>
+      </Helmet>
+
       <div className="mb-4 flex">
         <h1 className="text-2xl">Integrations</h1>
       </div>

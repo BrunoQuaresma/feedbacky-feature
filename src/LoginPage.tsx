@@ -5,6 +5,7 @@ import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import Input from './Input'
 import LoadingButton from './LoadingButton'
+import Helmet from 'react-helmet'
 
 type LoginForm = {
   email: string
@@ -39,66 +40,72 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto">
-      <div className="max-w-sm mx-auto py-10 lg:px-6">
-        <div className="font-medium text-indigo-700 text-4xl text-center mb-6">
-          <i className="far fa-comment-dots mr-2"></i>feedbacky
+    <>
+      <Helmet>
+        <title>Login - Feedbacky</title>
+      </Helmet>
+
+      <div className="container mx-auto">
+        <div className="max-w-sm mx-auto py-10 lg:px-6">
+          <div className="font-medium text-indigo-700 text-4xl text-center mb-6">
+            <i className="far fa-comment-dots mr-2"></i>feedbacky
+          </div>
+
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb-3">
+              <label
+                className="block font-medium text-sm text-gray-700 mb-2"
+                htmlFor=""
+              >
+                Email
+              </label>
+              <Input
+                autoFocus
+                required
+                name="email"
+                autoComplete="username"
+                type="email"
+                ref={register}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label
+                className="block font-medium text-sm text-gray-700 mb-2"
+                htmlFor=""
+              >
+                Password
+              </label>
+              <Input
+                required
+                name="password"
+                autoComplete="current-password"
+                type="password"
+                ref={register}
+              />
+              {errors && errors.password && (
+                <p className="text-sm text-red-600 mt-2">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <div className="mt-4">
+              <LoadingButton size="sm" block isLoading={isLoading}>
+                Login
+              </LoadingButton>
+
+              <Link
+                className="text-center mt-4 text-indigo-500 block"
+                to="/register"
+              >
+                I don't have an account yet.
+              </Link>
+            </div>
+          </form>
         </div>
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-3">
-            <label
-              className="block font-medium text-sm text-gray-700 mb-2"
-              htmlFor=""
-            >
-              Email
-            </label>
-            <Input
-              autoFocus
-              required
-              name="email"
-              autoComplete="username"
-              type="email"
-              ref={register}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label
-              className="block font-medium text-sm text-gray-700 mb-2"
-              htmlFor=""
-            >
-              Password
-            </label>
-            <Input
-              required
-              name="password"
-              autoComplete="current-password"
-              type="password"
-              ref={register}
-            />
-            {errors && errors.password && (
-              <p className="text-sm text-red-600 mt-2">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-
-          <div className="mt-4">
-            <LoadingButton size="sm" block isLoading={isLoading}>
-              Login
-            </LoadingButton>
-
-            <Link
-              className="text-center mt-4 text-indigo-500 block"
-              to="/register"
-            >
-              I don't have an account yet.
-            </Link>
-          </div>
-        </form>
       </div>
-    </div>
+    </>
   )
 }
 

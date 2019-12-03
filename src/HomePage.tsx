@@ -6,6 +6,7 @@ import CardPlaceholder from './CardPlaceholder'
 import useSWR from 'swr'
 import { getFeatures } from './api'
 import LinkButton from './LinkButton'
+import Helmet from 'react-helmet'
 
 const getSurveys = () =>
   axios
@@ -18,6 +19,10 @@ const FeaturesPage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Dashboard - Feedbacky</title>
+      </Helmet>
+
       <section className="mb-8">
         <h1 className="uppercase text-sm font-medium text-gray-700 mb-2">
           Features

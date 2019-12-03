@@ -4,6 +4,7 @@ import useForm from 'react-hook-form'
 import { useHistory } from 'react-router'
 import useSWR from 'swr'
 import { getFeatures } from './api'
+import Helmet from 'react-helmet'
 
 type NewSurveyForm = {
   name: string
@@ -27,6 +28,10 @@ const NewSurveyPage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>New Survey - Feedbacky</title>
+      </Helmet>
+
       <h1 className="uppercase text-sm font-medium text-gray-700 mb-4">
         New survey
       </h1>
