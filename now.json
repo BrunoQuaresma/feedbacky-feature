@@ -6,8 +6,8 @@
   },
   "build": {
     "env": {
-      "SCRIPT_URL": "https://feedbacky-feature.now.sh",
-      "REACT_APP_SCRIPT_URL": "https://feedbacky-feature.now.sh"
+      "SCRIPT_URL": "https://app.feedbacky.io",
+      "REACT_APP_SCRIPT_URL": "https://app.feedbacky.io"
     }
   }
 }
