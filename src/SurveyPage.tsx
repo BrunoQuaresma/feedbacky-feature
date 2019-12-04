@@ -87,7 +87,30 @@ const SurveyPage: React.FC = () => {
 
               <section className="mb-4">
                 <h4 className="mb-2">
-                  2. Include this script before{' '}
+                  2. Include the styles before{' '}
+                  <span className="bg-gray-200 inline-block text-sm px-1 rounded text-gray-700">
+                    {'</head>'}
+                  </span>
+                  .
+                </h4>
+                <code className="p-3 rounded bg-gray-200 block text-sm text-gray-700 relative">
+                  <pre>{`<link rel="stylesheet" href="${process.env.REACT_APP_SCRIPT_URL}/survey.css">`}</pre>
+                  <button
+                    onClick={() =>
+                      clipboard.copy(
+                        `<link rel="stylesheet" href="${process.env.REACT_APP_SCRIPT_URL}/survey.css">`
+                      )
+                    }
+                    className="absolute right-0 bottom-0 p-3"
+                  >
+                    <i className="far fa-copy"></i>
+                  </button>
+                </code>
+              </section>
+
+              <section className="mb-4">
+                <h4 className="mb-2">
+                  3. Include this script before{' '}
                   <span className="bg-gray-200 inline-block text-sm px-1 rounded text-gray-700">
                     {'</body>'}
                   </span>
@@ -105,7 +128,7 @@ const SurveyPage: React.FC = () => {
               </section>
 
               <section>
-                <h4>3. Check if your survey is rendered right.</h4>
+                <h4>4. Check if your survey is rendered right.</h4>
               </section>
             </div>
           </section>
