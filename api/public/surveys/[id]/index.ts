@@ -1,24 +1,6 @@
 import { NowRequest, NowResponse } from '@now/node'
-import { query as q, values } from 'faunadb'
-import db from '../../../_db'
 import { parseFeatureDoc } from '../../../_utils'
-
-type SurveyQueryResult = {
-  ref: values.Ref
-  data: {
-    user: values.Ref
-  }
-  features: {
-    ref: values.Ref
-    data: {}
-  }[]
-}
-
-type VotesQueryResult = values.Page<{
-  data: {
-    feature: values.Ref
-  }
-}>
+import getSurveyData from './_getSurveyData'
 
 export default async (req: NowRequest, res: NowResponse) => {
   res.setHeader('access-control-allow-origin', '*')
@@ -31,7 +13,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     return res.status(200).end()
   }
 
-  const { id, voter_id } = req.query
+  const { id, voter_id } = req.query as { id: string; voter_id: string }
 
   if (!voter_id) {
     return res
@@ -42,50 +24,7 @@ export default async (req: NowRequest, res: NowResponse) => {
       .end()
   }
 
-  const surveyQuery = db.query<SurveyQueryResult>(
-    q.Let(
-      {
-        surveyRef: q.Ref(q.Collection('surveys'), id),
-        surveyDoc: q.Get(q.Var('surveyRef'))
-      },
-      q.Merge(q.Var('surveyDoc'), {
-        features: q.Map(
-          q.Select(['data', 'features'], q.Var('surveyDoc')),
-          featureRef =>
-            q.Merge(q.Get(featureRef), {
-              number_of_votes: q.Count(
-                q.Match(
-                  q.Index('votes_by_survey_and_feature'),
-                  q.Var('surveyRef'),
-                  featureRef
-                )
-              )
-            })
-        ),
-        number_of_votes: q.Count(
-          q.Match(q.Index('votes_by_survey'), q.Var('surveyRef'))
-        )
-      })
-    )
-  )
-
-  const votesQuery = db.query<VotesQueryResult>(
-    q.Map(
-      q.Paginate(
-        q.Match(
-          q.Index('votes_by_survey_and_voter_id'),
-          q.Ref(q.Collection('surveys'), id),
-          voter_id
-        )
-      ),
-      x => q.Get(x)
-    )
-  )
-
-  const [survey, votes] = await Promise.all<
-    SurveyQueryResult,
-    VotesQueryResult
-  >([surveyQuery, votesQuery])
+  const [survey, votes] = await getSurveyData(id, voter_id)
 
   res.json({
     survey: {

@@ -1,15 +1,8 @@
 import { NowRequest, NowResponse } from '@now/node'
-import { query as q, values } from 'faunadb'
+import { query as q } from 'faunadb'
 import db from '../../../_db'
-import { FeatureDoc } from '../../../_types'
 import { parseFeatureDoc } from '../../../_utils'
-
-type SurveyDoc = {
-  ref: values.Ref
-  data: {}
-  features: FeatureDoc[]
-  number_of_votes: number
-}
+import getSurveyData from './_getSurveyData'
 
 type VoteParams = {
   voter_id: string
@@ -27,7 +20,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     return res.status(200).end()
   }
 
-  const { id } = req.query
+  const { id } = req.query as { id: string }
   const { voter_id, feature_id }: VoteParams = req.body
 
   if (!voter_id) {
@@ -39,7 +32,7 @@ export default async (req: NowRequest, res: NowResponse) => {
       .end()
   }
 
-  const [, survey] = await db.query<[any, SurveyDoc]>([
+  await db.query(
     q.Create(q.Collection('votes'), {
       data: {
         voter_id,
@@ -47,32 +40,10 @@ export default async (req: NowRequest, res: NowResponse) => {
         survey: q.Ref(q.Collection('surveys'), id),
         voted_at: q.Now()
       }
-    }),
-    q.Let(
-      {
-        surveyRef: q.Ref(q.Collection('surveys'), id),
-        surveyDoc: q.Get(q.Var('surveyRef'))
-      },
-      q.Merge(q.Var('surveyDoc'), {
-        features: q.Map(
-          q.Select(['data', 'features'], q.Var('surveyDoc')),
-          featureRef =>
-            q.Merge(q.Get(featureRef), {
-              number_of_votes: q.Count(
-                q.Match(
-                  q.Index('votes_by_survey_and_feature'),
-                  q.Var('surveyRef'),
-                  featureRef
-                )
-              )
-            })
-        ),
-        number_of_votes: q.Count(
-          q.Match(q.Index('votes_by_survey'), q.Var('surveyRef'))
-        )
-      })
-    )
-  ])
+    })
+  )
+
+  const [survey, votes] = await getSurveyData(id, voter_id)
 
   res.json({
     survey: {
@@ -81,9 +52,8 @@ export default async (req: NowRequest, res: NowResponse) => {
       id: survey.ref.id,
       features: survey.features.map(feature => ({
         ...parseFeatureDoc(feature),
-        voted: true
-      })),
-      number_of_votes: survey.number_of_votes
+        voted: votes.data.some(vote => vote.data.feature.id === feature.ref.id)
+      }))
     }
   })
 }
