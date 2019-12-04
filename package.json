@@ -36,7 +36,7 @@
   "scripts": {
     "start": "now dev",
     "dev": "npm run dev:scripts && BROWSER=none react-scripts start",
-    "dev:scripts": "NODE_ENV=production parcel build ./scripts/v1/survey.tsx -d ./public -o survey.js",
+    "dev:scripts": "parcel ./scripts/v1/index.html",
     "build": "react-scripts build && npm run build:scripts",
     "build:scripts": "NODE_ENV=production parcel build ./scripts/v1/survey.tsx -d ./build -o survey.js",
     "test": "react-scripts test",
