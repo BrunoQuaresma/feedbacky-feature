@@ -39,7 +39,7 @@ const RegisterPage: React.FC = () => {
         <title>Register - Feedbacky</title>
       </Helmet>
 
-      <div className="container mx-auto">
+      <div className="container mx-auto px-2">
         <div className="max-w-sm mx-auto py-10 lg:px-6">
           <div className="font-medium text-indigo-700 text-4xl text-center mb-6">
             <i className="far fa-comment-dots mr-2"></i>feedbacky
