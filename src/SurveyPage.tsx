@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react'
 import axios from 'axios'
 import useSWR from 'swr'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { useClipboard } from 'use-clipboard-copy'
 import { Survey, Feature } from './types'
 import sumBy from 'lodash/sumBy'
 import orderBy from 'lodash/orderBy'
 import Loading from './Loading'
 import Helmet from 'react-helmet'
+import { deleteSurvey } from './api'
 
 type SurveyResponse = {
   survey: Survey
@@ -30,6 +31,7 @@ const CODE_SNIPPET = `<script src="${process.env.REACT_APP_SCRIPT_URL}/survey.js
 </script>`
 
 const SurveyPage: React.FC = () => {
+  const history = useHistory()
   const clipboard = useClipboard()
   const { id } = useParams<{ id: string }>()
   const { data: survey } = useSWR([id, `/surveys/${id}`], getSurvey)
@@ -39,6 +41,13 @@ const SurveyPage: React.FC = () => {
 
   const calcVotePercentage = (numberOfVotes: number) =>
     (100 * numberOfVotes) / totalVotes
+
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this survey?')) {
+      await deleteSurvey(id)
+      history.push('/')
+    }
+  }
 
   if (!survey)
     return (
@@ -57,7 +66,17 @@ const SurveyPage: React.FC = () => {
           <title>{survey.name} - Feedbacky</title>
         </Helmet>
 
-        <h1 className="text-2xl mb-6">{survey.name}</h1>
+        <div className="mb-6 flex">
+          <h1 className="text-2xl">{survey.name}</h1>
+
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="ml-4 text-xs inline-block border border-solid border-indigo-500 text-indigo-700 hover:bg-indigo-100 rounded-full py-1 px-4 font-medium uppercase focus:outline-none mt-2"
+          >
+            Delete
+          </button>
+        </div>
 
         {survey.number_of_votes === 0 && (
           <section className="mb-6">

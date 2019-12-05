@@ -5,3 +5,6 @@ export const getFeatures = () =>
   axios
     .get<FeaturesResponse>('/api/features')
     .then(response => response.data.features)
+
+export const deleteSurvey = (surveyId: string) =>
+  axios.delete(`/api/surveys/${surveyId}`)
