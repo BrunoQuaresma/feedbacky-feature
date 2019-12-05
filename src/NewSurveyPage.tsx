@@ -8,7 +8,6 @@ import Helmet from 'react-helmet'
 
 type NewSurveyForm = {
   name: string
-  feature_ids: string[]
 }
 
 const NewSurveyPage: React.FC = () => {
@@ -22,8 +21,15 @@ const NewSurveyPage: React.FC = () => {
     : []
 
   const onSubmit = async (form: NewSurveyForm) => {
-    const { data } = await axios.post('/api/surveys', form)
+    const { data } = await axios.post('/api/surveys', {
+      ...form,
+      feature_ids: selectedFeatureIds
+    })
     history.push(`/surveys/${data.survey.id}`)
+  }
+
+  const unselectFeatureId = (featureId: string) => {
+    setSelectedFeatureIds(ids => ids.filter(id => id !== featureId))
   }
 
   return (
@@ -124,14 +130,16 @@ const NewSurveyPage: React.FC = () => {
                 return (
                   <div
                     key={selectedFeature.id}
-                    className="rounded-lg bg-white shadow mb-2 md:max-w-xs md:inline-block md:w-full sm:mr-2"
+                    className="relative rounded-lg bg-white shadow mb-2 md:max-w-xs md:inline-block md:w-full sm:mr-2"
                   >
-                    <input
-                      type="hidden"
-                      name={`feature_ids[${index}]`}
-                      value={selectedFeature.id}
-                      ref={register}
-                    />
+                    <button
+                      type="button"
+                      className="absolute w-8 h-8 top-0 right-0 block text-sm hover:bg-gray-100 text-gray-500"
+                      onClick={() => unselectFeatureId(selectedFeature.id)}
+                    >
+                      <i className="fas fa-times"></i>
+                    </button>
+
                     <div className="p-6">
                       <h3 className="text-lg font-medium">
                         {selectedFeature.name}

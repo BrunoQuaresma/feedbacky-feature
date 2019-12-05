@@ -24,7 +24,9 @@ export default async (req: NowRequest, res: NowResponse) => {
     q.Create(q.Collection('surveys'), {
       data: {
         name,
-        features: feature_ids.map(id => q.Ref(q.Collection('features'), id)),
+        features: Array.from(new Set(feature_ids)).map(id =>
+          q.Ref(q.Collection('features'), id)
+        ),
         user: q.Identity(),
         created_at: q.Now()
       }
