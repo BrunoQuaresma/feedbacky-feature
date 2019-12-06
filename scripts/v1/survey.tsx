@@ -28,7 +28,7 @@ type Feature = {
 const getVoterId = (): string => {
   let voterId = window.localStorage.getItem('voter_id')
 
-  if (!voterId) {
+  if (!voterId || voterId === '0e3d1683-d593-5f02-bb88-1be8161536ee') {
     voterId = uuid()
     window.localStorage.setItem('voter_id', voterId)
   }
