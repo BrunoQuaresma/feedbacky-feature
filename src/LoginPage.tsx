@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import Input from './Input'
 import LoadingButton from './LoadingButton'
 import Helmet from 'react-helmet'
+import usePageView from './usePageView'
 
 type LoginForm = {
   email: string
@@ -19,6 +20,7 @@ type TokenResponse = {
 const TOKEN_URL = '/api/token'
 
 const LoginPage: React.FC = () => {
+  usePageView()
   const { register, handleSubmit, setError, errors } = useForm<LoginForm>()
   const history = useHistory()
   const [isLoading, setIsLoading] = useState(false)

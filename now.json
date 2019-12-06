@@ -7,7 +7,8 @@
   "build": {
     "env": {
       "SCRIPT_URL": "https://app.feedbacky.io",
-      "REACT_APP_SCRIPT_URL": "https://app.feedbacky.io"
+      "REACT_APP_SCRIPT_URL": "https://app.feedbacky.io",
+      "REACT_APP_GA_ID": "UA-154157478-1"
     }
   }
 }

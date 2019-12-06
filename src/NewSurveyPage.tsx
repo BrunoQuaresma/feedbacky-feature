@@ -5,12 +5,14 @@ import { useHistory } from 'react-router'
 import useSWR from 'swr'
 import { getFeatures } from './api'
 import Helmet from 'react-helmet'
+import usePageView from './usePageView'
 
 type NewSurveyForm = {
   name: string
 }
 
 const NewSurveyPage: React.FC = () => {
+  usePageView()
   const { register, handleSubmit } = useForm<NewSurveyForm>()
   const history = useHistory()
   const { data: features } = useSWR('/features', getFeatures)

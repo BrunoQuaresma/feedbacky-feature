@@ -5,6 +5,7 @@ import { Feature } from './types'
 import useSWR from 'swr'
 import Loading from './Loading'
 import Helmet from 'react-helmet'
+import usePageView from './usePageView'
 
 type FeatureResponse = {
   feature: Feature
@@ -16,6 +17,7 @@ const getFeature = (id: string) =>
     .then(response => response.data.feature)
 
 const FeaturePage: React.FC = () => {
+  usePageView()
   const { id } = useParams()
   const { data: feature } = useSWR([id, `/features/${id}`], getFeature)
 

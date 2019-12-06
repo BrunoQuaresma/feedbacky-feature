@@ -7,6 +7,7 @@ import useSWR from 'swr'
 import { getFeatures } from './api'
 import LinkButton from './LinkButton'
 import Helmet from 'react-helmet'
+import usePageView from './usePageView'
 
 const getSurveys = () =>
   axios
@@ -14,6 +15,7 @@ const getSurveys = () =>
     .then(response => response.data.surveys)
 
 const FeaturesPage: React.FC = () => {
+  usePageView()
   const { data: features } = useSWR('/features', getFeatures)
   const { data: surveys } = useSWR('/surveys', getSurveys)
 

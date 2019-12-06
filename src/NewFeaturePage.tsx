@@ -5,6 +5,7 @@ import SimpleMDE from 'react-simplemde-editor'
 import 'easymde/dist/easymde.min.css'
 import { useHistory } from 'react-router'
 import Helmet from 'react-helmet'
+import usePageView from './usePageView'
 
 type NewFeatureForm = {
   name: string
@@ -12,6 +13,7 @@ type NewFeatureForm = {
 }
 
 const NewFeaturePage: React.FC = () => {
+  usePageView()
   const { register, handleSubmit, setValue, unregister } = useForm<
     NewFeatureForm
   >()

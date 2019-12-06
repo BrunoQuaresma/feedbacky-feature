@@ -9,6 +9,7 @@ import orderBy from 'lodash/orderBy'
 import Loading from './Loading'
 import Helmet from 'react-helmet'
 import { deleteSurvey } from './api'
+import usePageView from './usePageView'
 
 type SurveyResponse = {
   survey: Survey
@@ -31,6 +32,7 @@ const CODE_SNIPPET = `<script src="${process.env.REACT_APP_SCRIPT_URL}/survey.js
 </script>`
 
 const SurveyPage: React.FC = () => {
+  usePageView()
   const history = useHistory()
   const clipboard = useClipboard()
   const { id } = useParams<{ id: string }>()
