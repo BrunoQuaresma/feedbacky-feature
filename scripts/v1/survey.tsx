@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import uuid from 'uuid/v5'
+import uuid from 'uuid/v4'
 
 declare global {
   interface Window {
@@ -29,7 +29,7 @@ const getVoterId = (): string => {
   let voterId = window.localStorage.getItem('voter_id')
 
   if (!voterId) {
-    voterId = uuid(window.location.host, uuid.URL)
+    voterId = uuid()
     window.localStorage.setItem('voter_id', voterId)
   }
 
