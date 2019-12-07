@@ -34,3 +34,23 @@ export const sendVote = ({
       feature_id: featureId
     })
   }).then(response => response.json())
+
+export const sendUnvote = ({
+  featureId,
+  surveyId,
+  voterId
+}: {
+  surveyId: string
+  featureId: string
+  voterId: string
+}) =>
+  fetch(`${process.env.SCRIPT_URL}/api/public/surveys/${surveyId}/unvote`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      voter_id: voterId,
+      feature_id: featureId
+    })
+  }).then(response => response.json())

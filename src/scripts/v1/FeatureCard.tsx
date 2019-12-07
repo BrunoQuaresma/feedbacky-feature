@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { sendVote } from './api'
+import { sendVote, sendUnvote } from './api'
 import { Feature } from './types'
 
 const FeatureCard: React.FC<{
@@ -11,9 +11,23 @@ const FeatureCard: React.FC<{
   const [isVoting, setIsVoting] = useState(false)
 
   const vote = () => {
+    setIsVoting(true)
+
     sendVote({ surveyId, voterId, featureId: feature.id })
       .then(response => onVote(response.survey))
       .finally(() => setIsVoting(false))
+  }
+
+  const unvote = () => {
+    setIsVoting(true)
+
+    sendUnvote({ surveyId, voterId, featureId: feature.id })
+      .then(response => onVote(response.survey))
+      .finally(() => setIsVoting(false))
+  }
+
+  const handleVoteClick = () => {
+    feature.voted ? unvote() : vote()
   }
 
   return (
@@ -24,10 +38,11 @@ const FeatureCard: React.FC<{
       </div>
       <div className="feature-card__footer">
         <button
+          type="button"
           data-testid={`feature-${feature.id}-button`}
           className="feature-card__vote-button"
-          disabled={feature.voted || isVoting}
-          onClick={vote}
+          disabled={isVoting}
+          onClick={handleVoteClick}
         >
           {isVoting ? (
             <svg

@@ -59,13 +59,6 @@ describe('Public V1 Script', () => {
                 description: 'Feature A description',
                 number_of_votes: 3,
                 voted: false
-              },
-              {
-                id: '2',
-                name: 'Feature X',
-                description: 'Feature X description',
-                number_of_votes: 98,
-                voted: false
               }
             ]
           }
@@ -81,13 +74,6 @@ describe('Public V1 Script', () => {
                 name: 'Feature A',
                 description: 'Feature A description',
                 number_of_votes: 4, // From 3 to 4 votes after voting
-                voted: false
-              },
-              {
-                id: '2',
-                name: 'Feature X',
-                description: 'Feature X description',
-                number_of_votes: 98,
                 voted: false
               }
             ]
@@ -106,5 +92,52 @@ describe('Public V1 Script', () => {
     fireEvent.click(voteButton)
 
     await findByText('4')
+  })
+
+  test('it should unvote a feature', async () => {
+    fetchMock
+      .once(
+        JSON.stringify({
+          survey: {
+            features: [
+              {
+                id: '1',
+                name: 'Feature A',
+                description: 'Feature A description',
+                number_of_votes: 3,
+                voted: true
+              }
+            ]
+          }
+        })
+      )
+      .once(
+        // After vote the API returns the survey with updated values.
+        JSON.stringify({
+          survey: {
+            features: [
+              {
+                id: '1',
+                name: 'Feature A',
+                description: 'Feature A description',
+                number_of_votes: 2, // From 3 to 2 votes after unvoting
+                voted: false
+              }
+            ]
+          }
+        })
+      )
+
+    const { container, findByText, getByTestId } = render(
+      <div data-survey="249838633272476178"></div>
+    )
+
+    window.feedbacky.renderSurveys({ container })
+
+    await findByText('Feature A')
+    const unvoteButton = getByTestId('feature-1-button')
+    fireEvent.click(unvoteButton)
+
+    await findByText('2')
   })
 })
