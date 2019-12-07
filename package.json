@@ -37,13 +37,13 @@
   "scripts": {
     "start": "now dev",
     "dev": "BROWSER=none react-scripts start",
-    "dev:scripts": "parcel ./scripts/v1/index.html",
+    "dev:scripts": "parcel ./src/scripts/v1/index.html",
     "build": "react-scripts build && npm run build:scripts && npm run build:styles",
-    "build:scripts": "NODE_ENV=production parcel build ./scripts/v1/survey.tsx -d ./build -o survey.js",
-    "build:styles": "NODE_ENV=production parcel build ./scripts/v1/survey.css -d ./build -o survey.css",
+    "build:scripts": "NODE_ENV=production parcel build ./src/scripts/v1/survey.tsx -d ./build -o survey.js",
+    "build:styles": "NODE_ENV=production parcel build ./src/scripts/v1/survey.css -d ./build -o survey.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "scripts": "parcel ./scripts/v1/index.html"
+    "scripts": "parcel ./src/scripts/v1/index.html"
   },
   "eslintConfig": {
     "extends": "react-app"

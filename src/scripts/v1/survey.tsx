@@ -10,6 +10,7 @@ declare global {
 
 type FeedbackyConfig = {
   voterId?: string
+  container?: Document
 }
 
 type SurveyProps = {
@@ -69,6 +70,7 @@ const FeatureCard: React.FC<{
       </div>
       <div className="feature-card__footer">
         <button
+          data-testid={`feature-${feature.id}-button`}
           className="feature-card__vote-button"
           disabled={feature.voted || isVoting}
           onClick={vote}
@@ -88,9 +90,9 @@ const FeatureCard: React.FC<{
                 cy="50"
                 fill="none"
                 stroke="#667eea"
-                stroke-width="10"
+                strokeWidth="10"
                 r="35"
-                stroke-dasharray="164.93361431346415 56.97787143782138"
+                strokeDasharray="164.93361431346415 56.97787143782138"
                 transform="rotate(287.888 50 50)"
               >
                 <animateTransform
@@ -179,24 +181,20 @@ const Survey: React.FC<SurveyProps> = ({ id, voterId }) => {
 }
 
 window.feedbacky = {
-  renderSurveys: ({ voterId }: FeedbackyConfig = {}) => {
-    document.onreadystatechange = () => {
-      if (document.readyState !== 'complete') return
+  renderSurveys: ({ voterId, container = document }: FeedbackyConfig = {}) => {
+    container.querySelectorAll('*[data-survey]').forEach(surveyElement => {
+      const surveyId = surveyElement.getAttribute('data-survey')
 
-      document.querySelectorAll('*[data-survey]').forEach(container => {
-        const surveyId = container.getAttribute('data-survey')
-
-        if (!surveyId) {
-          throw new Error(
-            `You have to set an id on "data-survey" in ${container}`
-          )
-        }
-
-        ReactDOM.render(
-          <Survey id={surveyId} voterId={voterId || getVoterId()} />,
-          container
+      if (!surveyId) {
+        throw new Error(
+          `You have to set an id on "data-survey" in ${surveyElement}`
         )
-      })
-    }
+      }
+
+      ReactDOM.render(
+        <Survey id={surveyId} voterId={voterId || getVoterId()} />,
+        surveyElement
+      )
+    })
   }
 }
