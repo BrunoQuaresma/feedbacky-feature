@@ -41,9 +41,14 @@ const Modal: React.FC<{
                       key={key}
                       style={props}
                       className="modal"
+                      data-testid={`modal-feature-${feature.id}`}
                       onClick={handleModalClick}
                     >
-                      <button className="modal-close" onClick={toggle}>
+                      <button
+                        className="modal-close"
+                        onClick={toggle}
+                        data-testid={`modal-feature-${feature.id}-close`}
+                      >
                         <svg
                           aria-hidden="true"
                           focusable="false"

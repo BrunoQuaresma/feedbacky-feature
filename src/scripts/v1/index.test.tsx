@@ -1,6 +1,10 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render, fireEvent } from '@testing-library/react'
+import {
+  render,
+  fireEvent,
+  waitForElementToBeRemoved
+} from '@testing-library/react'
 import './'
 
 describe('Public V1 Script', () => {
@@ -139,5 +143,43 @@ describe('Public V1 Script', () => {
     fireEvent.click(unvoteButton)
 
     await findByText('2')
+  })
+
+  test('it should open and close the feature modal', async () => {
+    fetchMock.once(
+      JSON.stringify({
+        survey: {
+          features: [
+            {
+              id: '1',
+              name: 'Feature A',
+              description: 'Feature A description',
+              number_of_votes: 3,
+              voted: true
+            }
+          ]
+        }
+      })
+    )
+
+    const {
+      container,
+      findByText,
+      getByText,
+      findByTestId,
+      getByTestId,
+      queryByTestId
+    } = render(<div data-survey="249838633272476178"></div>)
+
+    window.feedbacky.renderSurveys({ container })
+
+    await findByText('Feature A')
+    const featureTitle = getByText('Feature A')
+    fireEvent.click(featureTitle)
+    await findByTestId('modal-feature-1')
+
+    const closeButton = getByTestId('modal-feature-1-close')
+    fireEvent.click(closeButton)
+    await waitForElementToBeRemoved(() => queryByTestId('modal-feature-1'))
   })
 })

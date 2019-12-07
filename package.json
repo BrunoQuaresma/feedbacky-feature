@@ -6,6 +6,7 @@
     "@nivo/bar": "^0.59.2",
     "@nivo/line": "^0.59.3",
     "@now/node": "^1.0.2",
+    "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@types/cookie": "^0.3.3",
     "@types/jest": "24.0.22",
