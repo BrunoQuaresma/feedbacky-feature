@@ -35,6 +35,14 @@ const Topbar: React.FC = () => {
 
           <NavLink
             className="inline-block px-2 py-4"
+            to="/forms"
+            isActive={(_, location) => location.pathname === '/forms'}
+          >
+            Forms
+          </NavLink>
+
+          <NavLink
+            className="inline-block px-2 py-4"
             to="/integrations"
             isActive={(_, location) => location.pathname === '/integrations'}
           >

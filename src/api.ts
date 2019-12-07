@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FeaturesResponse } from './types'
+import { FeaturesResponse, FormsResponse, FormResponse } from './types'
 
 export const getFeatures = () =>
   axios
@@ -8,3 +8,11 @@ export const getFeatures = () =>
 
 export const deleteSurvey = (surveyId: string) =>
   axios.delete(`/api/surveys/${surveyId}`)
+
+export const getForms = () =>
+  axios.get<FormsResponse>('/api/forms').then(response => response.data.forms)
+
+export const getForm = (id: string) =>
+  axios
+    .get<FormResponse>(`/api/forms/${id}`)
+    .then(response => response.data.form)

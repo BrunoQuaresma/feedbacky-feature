@@ -1,3 +1,7 @@
 .topbar a.active {
   color: white;
 }
+
+button {
+  outline: none !important;
+}

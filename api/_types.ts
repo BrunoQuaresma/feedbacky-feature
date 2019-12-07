@@ -5,3 +5,8 @@ export type FeatureDoc = {
   data: {}
   number_of_votes?: number
 }
+
+export type ReplyDoc = {
+  ref: values.Ref
+  data: {}
+}

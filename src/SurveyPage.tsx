@@ -74,7 +74,7 @@ const SurveyPage: React.FC = () => {
           <button
             type="button"
             onClick={handleDelete}
-            className="ml-4 text-xs inline-block border border-solid border-indigo-500 text-indigo-700 hover:bg-indigo-100 rounded-full py-1 px-4 font-medium uppercase focus:outline-none mt-2"
+            className="ml-4 text-xs inline-block border border-solid border-indigo-500 text-indigo-700 hover:bg-indigo-100 rounded-full py-1 px-4 font-medium uppercase mt-2"
           >
             Delete
           </button>
