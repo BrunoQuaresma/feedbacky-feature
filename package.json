@@ -45,7 +45,7 @@
     "dev:scripts": "parcel ./src/scripts/v1/index.html",
     "build": "react-scripts build && npm run build:scripts && npm run build:styles",
     "build:scripts": "NODE_ENV=production parcel build ./src/scripts/v1/index.tsx -d ./build -o survey.js",
-    "build:styles": "NODE_ENV=production parcel build ./src/scripts/v1/survey.css -d ./build -o survey.css",
+    "build:styles": "NODE_ENV=production parcel build ./src/scripts/v1/styles.css -d ./build -o survey.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "scripts": "parcel ./src/scripts/v1/index.html"
