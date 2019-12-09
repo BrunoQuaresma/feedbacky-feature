@@ -1,6 +1,7 @@
 import { getOrCreateLocalVoterId } from './utils'
 import ReactDOM from 'react-dom'
 import Survey from './Survey'
+import Form from './Form'
 import React from 'react'
 
 declare global {
@@ -36,6 +37,23 @@ window.feedbacky = {
       ReactDOM.render(
         <Survey id={surveyId} voterId={voterId || getOrCreateLocalVoterId()} />,
         surveyElement
+      )
+    })
+  },
+
+  renderForms: ({ voterId, container = document }: FeedbackyConfig = {}) => {
+    container.querySelectorAll('*[data-form]').forEach(formElement => {
+      const formId = formElement.getAttribute('data-form')
+
+      if (!formId) {
+        throw new Error(
+          `You have to set an id on "data-form" in ${formElement}`
+        )
+      }
+
+      ReactDOM.render(
+        <Form id={formId} voterId={voterId || getOrCreateLocalVoterId()} />,
+        formElement
       )
     })
   }

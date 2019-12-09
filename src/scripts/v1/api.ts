@@ -54,3 +54,20 @@ export const sendUnvote = ({
       feature_id: featureId
     })
   }).then(response => response.json())
+
+export const fetchForm = ({
+  formId,
+  voterId
+}: {
+  formId: string
+  voterId: string
+}) =>
+  fetch(
+    `${process.env.SCRIPT_URL}/api/public/forms/${formId}?voter_id=${voterId}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  ).then(response => response.json())
