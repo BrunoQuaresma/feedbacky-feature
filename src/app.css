@@ -3,5 +3,10 @@
 }
 
 button {
+  cursor: pointer;
   outline: none !important;
+}
+
+.backdrop {
+  background: rgba(26, 32, 44, 0.9);
 }
