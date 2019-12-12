@@ -1,5 +1,12 @@
+.topbar a {
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+}
+
 .topbar a.active {
   color: white;
+  font-weight: 500;
+  border-bottom-color: white;
 }
 
 button {
