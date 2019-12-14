@@ -6,7 +6,7 @@
 .topbar a.active {
   color: white;
   font-weight: 500;
-  border-bottom-color: white;
+  border-bottom-color: #ebf4ff;
 }
 
 button {

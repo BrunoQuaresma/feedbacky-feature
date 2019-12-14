@@ -1,23 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
-import { SurveysResponse } from './types'
-import CardPlaceholder from './CardPlaceholder'
+import { Activity } from './types'
 import useSWR from 'swr'
-import { getFeatures } from './api'
-import LinkButton from './LinkButton'
+import { getFeatures, getActivities, getSurveys, getForms } from './api'
 import Helmet from 'react-helmet'
 import usePageView from './usePageView'
-
-const getSurveys = () =>
-  axios
-    .get<SurveysResponse>('/api/surveys')
-    .then(response => response.data.surveys)
+import Loading from './Loading'
+import * as timeago from 'timeago.js'
 
 const FeaturesPage: React.FC = () => {
   usePageView()
-  const { data: features } = useSWR('/features', getFeatures)
-  const { data: surveys } = useSWR('/surveys', getSurveys)
+
+  const { data: features } = useSWR(['/features'], getFeatures)
+  const { data: surveys } = useSWR(['/surveys'], getSurveys)
+  const { data: forms } = useSWR(['/forms'], getForms)
+  const { data: activities } = useSWR<Activity[]>(
+    ['/activities'],
+    getActivities
+  )
 
   return (
     <>
@@ -25,170 +25,171 @@ const FeaturesPage: React.FC = () => {
         <title>Dashboard - Feedbacky</title>
       </Helmet>
 
-      <section className="mb-8">
-        <h1 className="uppercase text-sm font-medium text-gray-700 mb-2">
-          Features
-        </h1>
-
-        {!features && (
-          <div className="flex flex-wrap -mx-1">
-            <div className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2">
-              <CardPlaceholder></CardPlaceholder>
-            </div>
-            <div className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2">
-              <CardPlaceholder></CardPlaceholder>
-            </div>
-            <div className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2">
-              <CardPlaceholder></CardPlaceholder>
-            </div>
-          </div>
-        )}
-
-        {features && features.length === 0 && (
-          <div className="rounded-lg border border-indigo-400 p-6 text-gray-600 flex-1 flex max-w-4xl">
-            <div className="w-10 h-10 text-xl flex items-center justify-center bg-indigo-200 rounded-full text-indigo-700">
-              <i className="fas fa-box-open"></i>
-            </div>
-
-            <div className="ml-4">
-              <h3 className="text-2xl font-medium">
-                Create your first feature
-              </h3>
-              <p className="text-lg flex-1">
-                Create your first feature to start to create new surveys and
-                track your user preferences.
-              </p>
-
-              <LinkButton to="/features/new" className="mt-2">
-                Create feature
-              </LinkButton>
-            </div>
-          </div>
-        )}
-
-        <div className="flex flex-wrap -mx-1">
-          {features &&
-            features.map(feature => (
-              <div
-                className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2"
-                key={feature.id}
+      <section className="hidden md:block py-6 bg-white border-t-1 border-indigo-700 shadow mb-4">
+        <div className="container mx-auto px-2">
+          <div className="flex -mx-2">
+            <div className="px-2 w-1/3">
+              <Link
+                to="/forms/new"
+                className="p-6 border border-solid border-gray-300 rounded-lg flex hover:border-indigo-500"
               >
-                <div className="p-6 rounded-lg bg-white shadow h-full">
-                  <Link
-                    to={`/features/${feature.id}`}
-                    className="text-lg font-medium"
-                  >
-                    {feature.name}
-                  </Link>
-                  <p className="text-sm text-gray-700 truncate">
-                    {feature.description || 'No description provided'}
+                <div className="mr-4">
+                  <i className="far fa-file-alt text-indigo-500 text-xl"></i>
+                </div>
+                <div>
+                  <h2 className="font-medium mb-1">Create form</h2>
+                  <p className="text-gray-600 text-sm">
+                    Create forms to collect feedback. It can be used to get
+                    general suggestions or for specific topics.
+                  </p>
+                  <span className="block text-sm font-medium text-indigo-500 mt-2">
+                    <i className="fas fa-arrow-right text-xs mr-2"></i>Create
+                  </span>
+                </div>
+              </Link>
+            </div>
+
+            <div className="px-2 w-1/3">
+              <Link
+                to="/features/new"
+                className="p-6 border border-solid border-gray-300 rounded-lg flex hover:border-indigo-500"
+              >
+                <div className="mr-4">
+                  <i className="far fa-lightbulb text-indigo-500 text-xl"></i>
+                </div>
+                <div>
+                  <h2 className="font-medium mb-1">Create feature</h2>
+                  <p className="text-gray-600 text-sm">
+                    Create the next features that you want to release or
+                    features that you want to validate with your audience.
+                  </p>
+                  <span className="block text-sm font-medium text-indigo-500 mt-2">
+                    <i className="fas fa-arrow-right text-xs mr-2"></i>Create
+                  </span>
+                </div>
+              </Link>
+            </div>
+
+            <div className="px-2 w-1/3">
+              <Link
+                to="/surveys/new"
+                className="p-6 border border-solid border-gray-300 rounded-lg flex hover:border-indigo-500"
+              >
+                <div className="mr-4">
+                  <i className="far fa-heart text-indigo-500 text-xl"></i>
+                </div>
+                <div>
+                  <h2 className="font-medium mb-1">Create upvote survey</h2>
+                  <p className="text-gray-600 text-sm">
+                    Create upvote surveys to know what features are mostly
+                    wanted from your audience.
+                  </p>
+                  <span className="block text-sm font-medium text-indigo-500 mt-2">
+                    <i className="fas fa-arrow-right text-xs mr-2"></i>Create
+                  </span>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="container mx-auto px-2 py-4">
+        <section>
+          <h1 className="font-medium mb-2 text-lg">Last activities</h1>
+
+          {features && surveys && forms && activities ? (
+            activities.length > 0 ? (
+              activities.map(activity => (
+                <div
+                  key={activity.id}
+                  className="p-4 rounded-lg bg-white shadow mb-2"
+                >
+                  {activity.type === 'replies' && (
+                    <div className="flex items-baseline">
+                      <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
+                        <i className="far fa-comment text-indigo-500"></i>
+                      </div>
+                      <div className="items-baseline md:flex md:w-full">
+                        <p>
+                          Reply on{' '}
+                          <Link
+                            to={`/forms/${activity.source.form_id}`}
+                            className="font-medium hover:text-indigo-500"
+                          >
+                            {
+                              forms.find(
+                                form => form.id === activity.source.form_id
+                              )?.name
+                            }
+                          </Link>
+                        </p>
+
+                        <span className="block md:ml-auto text-gray-600 text-sm">
+                          {timeago.format(activity.source.created_at)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {activity.type === 'votes' && (
+                    <div className="flex items-baseline">
+                      <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-4">
+                        <i className="far fa-heart text-red-500"></i>
+                      </div>
+                      <div className="items-baseline md:flex md:w-full">
+                        <p>
+                          New vote on{' '}
+                          <Link
+                            to={`/surveys/${activity.source.survey_id}`}
+                            className="font-medium hover:text-red-500"
+                          >
+                            {
+                              surveys.find(
+                                survey =>
+                                  survey.id === activity.source.survey_id
+                              )?.name
+                            }
+                          </Link>{' '}
+                          for{' '}
+                          <Link
+                            to={`/features/${activity.source.feature_id}`}
+                            className="font-medium hover:text-red-500"
+                          >
+                            {
+                              features.find(
+                                feature =>
+                                  feature.id === activity.source.feature_id
+                              )?.name
+                            }
+                          </Link>
+                        </p>
+                        <span className="block md:ml-auto text-gray-600 text-sm">
+                          {timeago.format(activity.source.created_at)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))
+            ) : (
+              <div className="px-4 py-24 border border-solid border-gray-300 rounded-lg flex bg-white items-center justify-center">
+                <div className="mr-6">
+                  <i className="far fa-comments text-indigo-300 text-5xl"></i>
+                </div>
+                <div>
+                  <h2 className="font-medium text-2xl">No activities yet</h2>
+                  <p className="text-gray-600">
+                    Newest activities will be displayed here.
                   </p>
                 </div>
               </div>
-            ))}
-        </div>
-
-        {features && features.length > 0 && (
-          <LinkButton to="/features/new" className="mt-2">
-            New feature
-          </LinkButton>
-        )}
-      </section>
-
-      {features && features.length > 0 && (
-        <section>
-          <h1 className="uppercase text-sm font-medium text-gray-700 mb-2">
-            Surveys
-          </h1>
-
-          {features.length < 2 && (
-            <div className="rounded-lg border border-indigo-400 p-6 text-gray-600 flex-1 flex max-w-4xl">
-              <div className="w-10 h-10 text-xl flex items-center justify-center bg-indigo-200 rounded-full text-indigo-700">
-                <i className="fas fa-box-open"></i>
-              </div>
-
-              <div className="ml-4">
-                <h3 className="text-2xl font-medium">Almost there!</h3>
-                <p className="text-lg flex-1">
-                  To create your first survey you need to have two features at
-                  least.
-                </p>
-                <LinkButton to="/features/new" className="mt-2">
-                  Create feature
-                </LinkButton>
-              </div>
-            </div>
-          )}
-
-          {features.length > 1 && surveys && (
-            <>
-              {surveys.length === 0 && (
-                <div className="rounded-lg border border-indigo-400 p-6 text-gray-600 flex-1 flex max-w-4xl">
-                  <div className="w-10 h-10 text-xl flex items-center justify-center bg-indigo-200 rounded-full text-indigo-700">
-                    <i className="fas fa-clipboard-list"></i>
-                  </div>
-
-                  <div className="ml-4">
-                    <h3 className="text-2xl font-medium">
-                      Create your first survey
-                    </h3>
-                    <p className="text-lg flex-1">
-                      Create your first survey to track your user preferences.
-                    </p>
-
-                    <LinkButton outline to="/surveys/new" className="mt-2">
-                      Create survey
-                    </LinkButton>
-                  </div>
-                </div>
-              )}
-
-              <div className="flex flex-wrap -mx-1">
-                {surveys.map(survey => (
-                  <div
-                    className="px-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-2"
-                    key={survey.id}
-                  >
-                    <div className="rounded-lg bg-white shadow h-full">
-                      <div className="p-6">
-                        <Link
-                          className="text-lg font-medium mb-2 block"
-                          to={`/surveys/${survey.id}`}
-                        >
-                          {survey.name}
-                        </Link>
-
-                        <div className="truncate">
-                          {survey.features.map(feature => (
-                            <div
-                              key={feature.id}
-                              className="bg-indigo-100 text-white inline-block text-indigo-700 text-xs font-medium px-2 py-1 rounded mb-1 mr-1"
-                            >
-                              {feature.name}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="px-6 py-2 bg-gray-100 text-xs font-medium text-gray-700">
-                        <small className="mr-1 text-indigo-500">
-                          <i className="fas fa-heart"></i>
-                        </small>
-                        {survey.number_of_votes} votes
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-
-          {surveys && surveys.length > 0 && (
-            <LinkButton outline to="/surveys/new" className="mt-2">
-              New survey
-            </LinkButton>
+            )
+          ) : (
+            <Loading></Loading>
           )}
         </section>
-      )}
+      </div>
     </>
   )
 }

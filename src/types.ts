@@ -1,3 +1,5 @@
+import { values } from 'faunadb'
+
 export type Feature = {
   id: string
   name: string
@@ -12,11 +14,19 @@ export type Survey = {
   features: Feature[]
 }
 
+export type Vote = {
+  feature_id: string
+  survey_id: string
+  voted_at: string
+  created_at: string
+}
+
 export type Reply = {
   id: string
   created_at: string
   content: string
   voter_id: string
+  form_id: string
 }
 
 export type Form = {
@@ -26,6 +36,17 @@ export type Form = {
   number_of_replies: number
   replies?: Reply[]
 }
+
+export type Activity = { id: string } & (
+  | {
+      type: 'votes'
+      source: Vote
+    }
+  | {
+      type: 'replies'
+      source: Reply
+    }
+)
 
 export type FeaturesResponse = {
   features: Feature[]

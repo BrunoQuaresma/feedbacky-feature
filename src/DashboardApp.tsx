@@ -41,30 +41,37 @@ const DashboardApp: React.FC = () => {
   }
 
   return (
-    <>
+    <div className="h-full flex flex-col">
       <Topbar toggleSidebar={toggleSidebar} />
+
       {isSmallScreen && (
         <Sidebar isOpen={isSidebarOpen} toggle={toggleSidebar} />
       )}
 
-      <div className="container mx-auto px-2 py-6">
-        <Switch>
-          <Route exact path="/" component={HomePage}></Route>
-          <Route exact path="/features/new" component={NewFeaturePage}></Route>
-          <Route exact path="/features/:id" component={FeaturePage}></Route>
-          <Route exact path="/surveys/new" component={NewSurveyPage}></Route>
-          <Route exact path="/surveys/:id" component={SurveyPage}></Route>
-          <Route exact path="/forms" component={FormsPage}></Route>
-          <Route exact path="/forms/new" component={NewFormPage}></Route>
-          <Route exact path="/forms/:id" component={FormPage}></Route>
-          <Route
-            exact
-            path="/integrations"
-            component={IntegrationsPage}
-          ></Route>
-        </Switch>
-      </div>
-    </>
+      <Switch>
+        <Route exact path="/" component={HomePage}></Route>
+        <Route exact path="/features/new" component={NewFeaturePage}></Route>
+        <Route exact path="/features/:id" component={FeaturePage}></Route>
+        <Route exact path="/surveys/new" component={NewSurveyPage}></Route>
+        <Route exact path="/surveys/:id" component={SurveyPage}></Route>
+        <Route exact path="/forms" component={FormsPage}></Route>
+        <Route exact path="/forms/new" component={NewFormPage}></Route>
+        <Route exact path="/forms/:id" component={FormPage}></Route>
+        <Route exact path="/integrations" component={IntegrationsPage}></Route>
+      </Switch>
+
+      <footer className="text-center text-sm text-gray-600 mt-auto p-6">
+        © 2019 feedbacky.io - Ask for help on{' '}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://twitter.com/feedbackyio"
+          className="font-medium"
+        >
+          Twitter
+        </a>
+      </footer>
+    </div>
   )
 }
 

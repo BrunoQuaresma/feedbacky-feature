@@ -38,6 +38,7 @@
     "react-simplemde-editor": "^4.1.0",
     "react-spring": "^8.0.27",
     "swr": "^0.1.10",
+    "timeago.js": "^4.0.1",
     "typescript": "3.7.2",
     "use-clipboard-copy": "^0.1.1",
     "uuid": "^3.3.3"
