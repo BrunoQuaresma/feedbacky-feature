@@ -3,11 +3,16 @@ import {
   FeaturesResponse,
   FormsResponse,
   FormResponse,
-  SurveysResponse
+  SurveysResponse,
+  Feature
 } from './types'
 
 type ActivitiesResponse = {
   activities: any[]
+}
+
+type VotesResponse = {
+  votes: { voted_at: string; feature: Feature; id: string }[]
 }
 
 export const getFeatures = () =>
@@ -19,6 +24,11 @@ export const getSurveys = () =>
   axios
     .get<SurveysResponse>('/api/surveys')
     .then(response => response.data.surveys)
+
+export const getVotes = (surveyId: string) =>
+  axios
+    .get<VotesResponse>(`/api/surveys/${surveyId}/votes`)
+    .then(response => response.data.votes)
 
 export const deleteSurvey = (surveyId: string) =>
   axios.delete(`/api/surveys/${surveyId}`)
