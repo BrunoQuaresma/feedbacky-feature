@@ -1,5 +1,3 @@
-import { values } from 'faunadb'
-
 export type Feature = {
   id: string
   name: string

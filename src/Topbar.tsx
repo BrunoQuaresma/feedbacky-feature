@@ -4,13 +4,9 @@ import { NavLink, Link, useHistory } from 'react-router-dom'
 import { trigger } from 'swr'
 import LoadingButton from './LoadingButton'
 
-type TopbarProps = {
-  toggleSidebar: () => void
-}
-
 const removeToken = () => axios.delete('/api/token')
 
-const Topbar: React.FC<TopbarProps> = ({ toggleSidebar }) => {
+const Topbar: React.FC = () => {
   const history = useHistory()
   const [isLoginOut, setIsLoginOut] = useState(false)
 
@@ -24,21 +20,17 @@ const Topbar: React.FC<TopbarProps> = ({ toggleSidebar }) => {
 
   return (
     <header className="bg-indigo-700 text-indigo-200 shadow-md topbar">
-      <div className="container mx-auto px-2 py-3 flex items-baseline sm:py-0">
-        <button
-          className="p-3 px-5 -ml-3 -my-3 text-xl mr-2 md:hidden"
-          onClick={toggleSidebar}
+      <div className="container mx-auto px-2 md:flex items-baseline">
+        <Link
+          to="/"
+          className="font-medium text-xl text-white py-2 inline-block"
         >
-          <i className="fas fa-bars"></i>
-        </button>
-
-        <Link to="/" className="font-medium text-xl text-white">
           <i className="far fa-comment-dots mr-2"></i>feedbacky
         </Link>
 
-        <nav className="hidden sm:block ml-16">
+        <nav className="-mx-2 md:ml-16 md:mr-0">
           <NavLink
-            className="inline-block px-3 py-5 hover:text-white"
+            className="inline-block px-3 py-3 sm:py-5 hover:text-white"
             to="/"
             isActive={(_, location) => location.pathname === '/'}
           >
@@ -46,7 +38,7 @@ const Topbar: React.FC<TopbarProps> = ({ toggleSidebar }) => {
           </NavLink>
 
           <NavLink
-            className="inline-block px-3 py-5 hover:text-white"
+            className="inline-block px-3 py-3 sm:py-5 hover:text-white"
             to="/forms"
             isActive={(_, location) => location.pathname === '/forms'}
           >
@@ -54,7 +46,7 @@ const Topbar: React.FC<TopbarProps> = ({ toggleSidebar }) => {
           </NavLink>
 
           <NavLink
-            className="inline-block px-3 py-5 hover:text-white"
+            className="inline-block px-3 py-3 sm:py-5 hover:text-white"
             to="/integrations"
             isActive={(_, location) => location.pathname === '/integrations'}
           >
@@ -62,12 +54,13 @@ const Topbar: React.FC<TopbarProps> = ({ toggleSidebar }) => {
           </NavLink>
         </nav>
 
-        <nav className="hidden sm:block ml-auto">
+        <nav className="absolute top-0 right-0 md:relative md:ml-auto">
           <LoadingButton
             title="Logout"
             isLoading={isLoginOut}
             onClick={handleLogout}
             color="transparent"
+            className="h-12 w-12"
           >
             <i className="fas fa-power-off"></i>
           </LoadingButton>

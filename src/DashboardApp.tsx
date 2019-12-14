@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import { Switch, Route, useHistory } from 'react-router-dom'
-import { useMediaQuery } from 'react-responsive'
 import HomePage from './HomePage'
 import NewFeaturePage from './NewFeaturePage'
 import NewSurveyPage from './NewSurveyPage'
@@ -13,16 +12,11 @@ import FormPage from './FormPage'
 import Topbar from './Topbar'
 import Loading from './Loading'
 import NewFormPage from './NewFormPage'
-import Sidebar from './Sidebar'
-
 const verifyToken = () => axios.get('/api/token')
 
 const DashboardApp: React.FC = () => {
-  // TailwindCSS https://tailwindcss.com/docs/breakpoints/#app
-  const isSmallScreen = useMediaQuery({ maxDeviceWidth: 767 })
   const history = useHistory()
   const [isVerifyingToken, setIsVerifyingToken] = useState(true)
-  const [isSidebarOpen, setIsOpenSidebar] = useState(false)
 
   useEffect(() => {
     verifyToken()
@@ -34,19 +28,13 @@ const DashboardApp: React.FC = () => {
       })
   }, [history])
 
-  const toggleSidebar = () => setIsOpenSidebar(isOpen => !isOpen)
-
   if (isVerifyingToken) {
     return <Loading></Loading>
   }
 
   return (
     <div className="h-full flex flex-col">
-      <Topbar toggleSidebar={toggleSidebar} />
-
-      {isSmallScreen && (
-        <Sidebar isOpen={isSidebarOpen} toggle={toggleSidebar} />
-      )}
+      <Topbar />
 
       <Switch>
         <Route exact path="/" component={HomePage}></Route>
