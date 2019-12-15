@@ -291,7 +291,7 @@ const SurveyPage: React.FC = () => {
                 ) : (
                   <div className="px-4 py-24 border border-solid border-gray-300 rounded-lg flex bg-white items-center justify-center">
                     <div className="mr-6">
-                      <i className="far fa-comments text-indigo-300 text-5xl"></i>
+                      <i className="far fa-heart text-indigo-300 text-5xl"></i>
                     </div>
                     <div>
                       <h2 className="font-medium text-2xl">No votes yet</h2>
