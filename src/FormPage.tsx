@@ -1,6 +1,6 @@
 import React from 'react'
 import useSWR from 'swr'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useClipboard } from 'use-clipboard-copy'
 import Loading from './Loading'
 import Helmet from 'react-helmet'
@@ -36,18 +36,27 @@ const FormPage: React.FC = () => {
           <title>{form.name} - Feedbacky</title>
         </Helmet>
 
-        <div className="mb-6">
-          <h1 className="text-2xl block">{form.name}</h1>
-          <div className="text-xl text-gray-700">{form.title}</div>
+        <section className="py-6 bg-white border-t-1 border-indigo-700 shadow mb-4">
+          <div className="container mx-auto px-2 md:flex">
+            <div>
+              <h1 className="leading-tight text-2xl font-medium">
+                {form.name}{' '}
+                <span className="text-base text-gray-700 font-normal">
+                  in <Link to="/forms">forms</Link>
+                </span>
+              </h1>
 
-          {/* <button
-            type="button"
-            onClick={handleDelete}
-            className="ml-4 text-xs inline-block border border-solid border-indigo-500 text-indigo-700 hover:bg-indigo-100 rounded-full py-1 px-4 font-medium uppercase focus:outline-none mt-2"
-          >
-            Delete
-          </button> */}
-        </div>
+              <div className="flex mt-2 text-gray-700 text-sm">
+                {form.replies && (
+                  <div className="flex items-baseline">
+                    <i className="far fa-comments text-sm mr-1"></i>
+                    {form.replies.length} replies
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
 
         {form.replies && form.replies.length === 0 && (
           <section className="mb-6">
@@ -125,14 +134,14 @@ const FormPage: React.FC = () => {
         )}
 
         {form.replies && form.replies.length > 0 && (
-          <section className="mb-8">
-            <h2 className="uppercase text-sm font-medium text-gray-700 mb-2">
-              Replies
-            </h2>
+          <section className="py-4">
+            <div className="container mx-auto px-2">
+              <h2 className="font-medium mb-2 text-lg">Replies</h2>
 
-            {form.replies.map(reply => (
-              <ReplyCard key={reply.id} reply={reply} />
-            ))}
+              {form.replies.map(reply => (
+                <ReplyCard key={reply.id} reply={reply} />
+              ))}
+            </div>
           </section>
         )}
       </>
