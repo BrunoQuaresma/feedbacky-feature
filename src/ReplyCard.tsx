@@ -8,7 +8,7 @@ const ReplyCard: React.FC<{ reply: Reply }> = ({ reply }) => {
   const toggle = () => setIsOpen(isOpen => !isOpen)
 
   return (
-    <div className="p-4 rounded-lg bg-white shadow mb-2 flex items-baseline">
+    <div className="p-4 rounded-lg bg-white shadow mb-2 flex flex-wrap items-baseline">
       <button
         className="relative w-8 h-8 rounded-full bg-indigo-100  mr-4"
         onClick={toggle}
@@ -26,12 +26,17 @@ const ReplyCard: React.FC<{ reply: Reply }> = ({ reply }) => {
         </div>
       </button>
 
-      <div className={`flex-1 ${isOpen ? '' : 'truncate'}`}>
-        <p className={`text-lg ${isOpen ? 'whitespace-pre-line' : 'truncate'}`}>
+      <div className={`flex-1 ${isOpen ? '' : 'truncate'} md:flex`}>
+        <p
+          className={`text-lg  max-w-xl ${
+            isOpen ? 'whitespace-pre-line' : 'truncate'
+          }`}
+        >
           {reply.content}
         </p>
-        <p className={`text-sm text-gray-700`}>
-          Replyed on {timeago.format(reply.created_at)}
+
+        <p className="text-sm text-gray-700 ml-auto">
+          {timeago.format(reply.created_at)}
         </p>
       </div>
     </div>
