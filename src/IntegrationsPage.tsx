@@ -11,15 +11,15 @@ const IntegrationsPage: React.FC = () => {
         <title>Integrations - Feedbacky</title>
       </Helmet>
 
-      <div className="mb-4 flex">
-        <h1 className="text-2xl">Integrations</h1>
-      </div>
+      <section className="py-6 bg-white border-t-1 border-indigo-700 shadow mb-4">
+        <div className="container mx-auto px-2 md:flex">
+          <h1 className="leading-tight text-2xl font-medium">Integrations</h1>
+        </div>
+      </section>
 
-      <div className="w-full px-2 flex flex-col">
+      <div className="container mx-auto px-2 py-4 flex flex-col">
         <div className="mb-2 flex items-center">
-          <h2 className="uppercase text-sm font-medium text-gray-700 ">
-            Gogole Analytics
-          </h2>
+          <h2 className="font-medium text-lg">Google Analytics</h2>
 
           <span className="ml-2 inline-block bg-teal-200 font-medium uppercase rounded-full text-xs px-3 py-1 text-teal-900">
             Coming soon{' '}
