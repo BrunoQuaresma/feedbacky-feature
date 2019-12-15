@@ -12,6 +12,7 @@ import FormPage from './FormPage'
 import Topbar from './Topbar'
 import Loading from './Loading'
 import NewFormPage from './NewFormPage'
+import FeaturesPage from './FeaturesPage'
 const verifyToken = () => axios.get('/api/token')
 
 const DashboardApp: React.FC = () => {
@@ -38,6 +39,7 @@ const DashboardApp: React.FC = () => {
 
       <Switch>
         <Route exact path="/" component={HomePage}></Route>
+        <Route exact path="/features" component={FeaturesPage}></Route>
         <Route exact path="/features/new" component={NewFeaturePage}></Route>
         <Route exact path="/features/:id" component={FeaturePage}></Route>
         <Route exact path="/surveys/new" component={NewSurveyPage}></Route>

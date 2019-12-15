@@ -3,54 +3,52 @@ import Helmet from 'react-helmet'
 import usePageView from './usePageView'
 import { Link } from 'react-router-dom'
 import useSWR from 'swr'
-import { getForms } from './api'
+import { getFeatures } from './api'
 import Loading from './Loading'
 
-const FormsPage: React.FC = () => {
+const FeaturesPage: React.FC = () => {
   usePageView()
-  const { data: forms } = useSWR('/forms', getForms)
+  const { data: features } = useSWR('/features', getFeatures)
 
   return (
     <>
       <Helmet>
-        <title>Forms - Feedbacky</title>
+        <title>Features - Feedbacky</title>
       </Helmet>
 
       <section className="py-6 bg-white border-t-1 border-indigo-700 shadow mb-4">
         <div className="container mx-auto px-2 md:flex">
-          <h1 className="leading-tight text-2xl font-medium">Forms</h1>
+          <h1 className="leading-tight text-2xl font-medium">Features</h1>
 
           <div className="ml-auto mt-2 md:mt-0">
             <Link
-              to="/forms/new"
+              to="/features/new"
               className="text-xs inline-block border border-solid border-indigo-500 text-indigo-700 hover:bg-indigo-100 rounded-full py-1 px-4 font-medium uppercase"
             >
-              New form
+              New feature
             </Link>
           </div>
         </div>
       </section>
 
       <div className="container px-2 mx-auto py-4">
-        {forms ? (
-          forms.map(form => (
-            <div key={form.id} className="p-4 rounded-lg bg-white shadow mb-2">
+        {features ? (
+          features.map(feature => (
+            <div
+              key={feature.id}
+              className="p-4 rounded-lg bg-white shadow mb-2"
+            >
               <div className="flex items-baseline">
                 <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                  <i className="far fa-file-alt text-indigo-500"></i>
+                  <i className="far fa-lightbulb text-indigo-500"></i>
                 </div>
                 <div className="items-baseline md:flex md:w-full">
                   <Link
-                    to={`/forms/${form.id}`}
+                    to={`/features/${feature.id}`}
                     className="font-medium hover:text-indigo-500"
                   >
-                    {form.name}
+                    {feature.name}
                   </Link>
-
-                  <span className="block md:ml-auto text-gray-600 text-sm">
-                    <i className="far fa-comment text-indigo-500 mr-1"></i>
-                    {form.number_of_replies} replies
-                  </span>
                 </div>
               </div>
             </div>
@@ -63,4 +61,4 @@ const FormsPage: React.FC = () => {
   )
 }
 
-export default FormsPage
+export default FeaturesPage
