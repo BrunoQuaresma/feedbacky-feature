@@ -13,6 +13,8 @@ import Topbar from './Topbar'
 import Loading from './Loading'
 import NewFormPage from './NewFormPage'
 import FeaturesPage from './FeaturesPage'
+import SurveysPage from './SurveysPage'
+
 const verifyToken = () => axios.get('/api/token')
 
 const DashboardApp: React.FC = () => {
@@ -42,6 +44,7 @@ const DashboardApp: React.FC = () => {
         <Route exact path="/features" component={FeaturesPage}></Route>
         <Route exact path="/features/new" component={NewFeaturePage}></Route>
         <Route exact path="/features/:id" component={FeaturePage}></Route>
+        <Route exact path="/surveys" component={SurveysPage}></Route>
         <Route exact path="/surveys/new" component={NewSurveyPage}></Route>
         <Route exact path="/surveys/:id" component={SurveyPage}></Route>
         <Route exact path="/forms" component={FormsPage}></Route>
