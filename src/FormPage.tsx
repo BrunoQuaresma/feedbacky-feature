@@ -59,10 +59,8 @@ const FormPage: React.FC = () => {
         </section>
 
         {form.replies && form.replies.length === 0 && (
-          <section className="mb-6">
-            <h2 className="uppercase text-sm font-medium text-gray-700 mb-2">
-              Next steps
-            </h2>
+          <section className="py-4 container mx-auto">
+            <h2 className="font-medium mb-2 text-lg">Next steps</h2>
 
             <div className="p-6 rounded-lg bg-white shadow mb-2">
               <h3 className="text-2xl mb-4">Add this form to your page</h3>
