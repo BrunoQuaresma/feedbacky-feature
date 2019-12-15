@@ -59,7 +59,7 @@ const FormPage: React.FC = () => {
         </section>
 
         {form.replies && form.replies.length === 0 && (
-          <section className="py-4 container mx-auto">
+          <section className="py-4 container mx-auto px-2">
             <h2 className="font-medium mb-2 text-lg">Next steps</h2>
 
             <div className="p-6 rounded-lg bg-white shadow mb-2">

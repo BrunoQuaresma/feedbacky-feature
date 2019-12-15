@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import { Feature } from './types'
 import useSWR from 'swr'
@@ -39,8 +39,22 @@ const FeaturePage: React.FC = () => {
           <title>{feature.name} - Feedbacky</title>
         </Helmet>
 
-        <h1 className="text-2xl mb-4">{feature.name}</h1>
-        <p>{feature.description}</p>
+        <section className="py-6 bg-white border-t-1 border-indigo-700 shadow mb-4">
+          <div className="container mx-auto px-2 md:flex">
+            <div>
+              <h1 className="leading-tight text-2xl font-medium">
+                {feature.name}{' '}
+                <span className="text-base text-gray-700 font-normal">
+                  in <Link to="/features">features</Link>
+                </span>
+              </h1>
+            </div>
+          </div>
+        </section>
+
+        <div className="container mx-auto px-2 py-4">
+          <p>{feature.description}</p>
+        </div>
       </>
     )
   )
