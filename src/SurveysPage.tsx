@@ -51,7 +51,7 @@ const SurveysPage: React.FC = () => {
                   </Link>
 
                   <span className="block md:ml-auto text-gray-600 text-sm">
-                    <i className="fas fa-heart text-indigo-500 mr-1"></i>
+                    <i className="far fa-heart text-indigo-500 mr-1"></i>
                     {survey.number_of_votes} votes
                   </span>
                 </div>
