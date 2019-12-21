@@ -33,31 +33,50 @@ const SurveysPage: React.FC = () => {
 
       <div className="container px-2 mx-auto py-4">
         {surveys ? (
-          surveys.map(survey => (
-            <div
-              key={survey.id}
-              className="p-4 rounded-lg bg-white shadow mb-2"
-            >
-              <div className="flex items-baseline">
-                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                  <i className="far fa-heart text-indigo-500"></i>
-                </div>
-                <div className="items-baseline md:flex md:w-full">
-                  <Link
-                    to={`/surveys/${survey.id}`}
-                    className="font-medium hover:text-indigo-500"
-                  >
-                    {survey.name}
-                  </Link>
+          surveys.length > 0 ? (
+            surveys.map(survey => (
+              <div
+                key={survey.id}
+                className="p-4 rounded-lg bg-white shadow mb-2"
+              >
+                <div className="flex items-baseline">
+                  <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
+                    <i className="far fa-heart text-indigo-500"></i>
+                  </div>
+                  <div className="items-baseline md:flex md:w-full">
+                    <Link
+                      to={`/surveys/${survey.id}`}
+                      className="font-medium hover:text-indigo-500"
+                    >
+                      {survey.name}
+                    </Link>
 
-                  <span className="block md:ml-auto text-gray-600 text-sm">
-                    <i className="far fa-heart text-indigo-500 mr-1"></i>
-                    {survey.number_of_votes} votes
-                  </span>
+                    <span className="block md:ml-auto text-gray-600 text-sm">
+                      <i className="far fa-heart text-indigo-500 mr-1"></i>
+                      {survey.number_of_votes} votes
+                    </span>
+                  </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="px-4 py-24 border border-solid border-gray-300 rounded-lg flex bg-white items-center justify-center">
+              <div className="mr-6">
+                <i className="far fa-heart text-indigo-300 text-5xl"></i>
+              </div>
+              <div>
+                <h2 className="font-medium text-2xl">
+                  Create your first upvote survey
+                </h2>
+                <p className="text-gray-600">
+                  <Link to="/surveys/new" className="text-indigo-500">
+                    Add upvote survey
+                  </Link>{' '}
+                  to know what feature your users most like to have.
+                </p>
+              </div>
             </div>
-          ))
+          )
         ) : (
           <Loading></Loading>
         )}

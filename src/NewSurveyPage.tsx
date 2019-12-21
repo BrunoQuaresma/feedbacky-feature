@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import useForm from 'react-hook-form'
 import { useHistory } from 'react-router'
-import useSWR from 'swr'
+import useSWR, { trigger } from 'swr'
 import { getFeatures } from './api'
 import Helmet from 'react-helmet'
 import usePageView from './usePageView'
@@ -27,6 +27,7 @@ const NewSurveyPage: React.FC = () => {
       ...form,
       feature_ids: selectedFeatureIds
     })
+    trigger('/surveys')
     history.push(`/surveys/${data.survey.id}`)
   }
 
