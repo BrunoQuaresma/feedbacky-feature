@@ -110,7 +110,7 @@ const FeaturesPage: React.FC = () => {
                       <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
                         <i className="far fa-comment text-indigo-500"></i>
                       </div>
-                      <div className="items-baseline md:flex md:w-full">
+                      <div className="items-baseline md:flex flex-1">
                         <p>
                           Reply on{' '}
                           <Link
@@ -137,7 +137,7 @@ const FeaturesPage: React.FC = () => {
                       <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-4">
                         <i className="far fa-heart text-red-500"></i>
                       </div>
-                      <div className="items-baseline md:flex md:w-full">
+                      <div className="items-baseline md:flex flex-1">
                         <p>
                           New vote on{' '}
                           <Link
