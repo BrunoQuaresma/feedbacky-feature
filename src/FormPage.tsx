@@ -63,7 +63,7 @@ const FormPage: React.FC = () => {
             <h2 className="font-medium mb-2 text-lg">Next steps</h2>
 
             <div className="p-6 rounded-lg bg-white shadow mb-2">
-              <h3 className="text-2xl mb-4">Add this form to your page</h3>
+              <h3 className="text-2xl mb-4">Add this form on your website</h3>
 
               <section className="mb-4">
                 <h4 className="mb-2">

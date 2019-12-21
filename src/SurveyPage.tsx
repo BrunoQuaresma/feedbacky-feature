@@ -125,7 +125,7 @@ const SurveyPage: React.FC = () => {
               </h2>
 
               <div className="p-6 rounded-lg bg-white shadow mb-2">
-                <h3 className="text-2xl mb-4">Add this survey to your page</h3>
+                <h3 className="text-2xl mb-4">Add this form on your website</h3>
 
                 <section className="mb-4">
                   <h4 className="mb-2">
