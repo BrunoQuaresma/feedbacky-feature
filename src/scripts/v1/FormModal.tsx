@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Modal from '../Modal'
-import { fetchForm } from './api'
+import { fetchForm, sendReply } from './api'
 
 const FormModal: React.FC<{
   id: string
@@ -8,6 +8,10 @@ const FormModal: React.FC<{
 }> = ({ id, voterId }) => {
   const [form, setForm] = useState<{ title: string }>()
   const [isOpen, setIsOpen] = useState(false)
+  const [message, setMessage] = useState('')
+  const [formState, setFormState] = useState<'idle' | 'sending' | 'finished'>(
+    'idle'
+  )
 
   useEffect(() => {
     fetchForm({ formId: id, voterId }).then(response => setForm(response.form))
@@ -33,29 +37,47 @@ const FormModal: React.FC<{
 
   const toggle = () => setIsOpen(isOpen => !isOpen)
 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
+    setFormState('sending')
+    await sendReply({ formId: id, voterId, content: message })
+    setFormState('finished')
+    setMessage('')
+    setTimeout(() => toggle(), 1000)
+  }
+
   if (!form) return <></>
 
   return (
-    <>
-      <Modal id={id} toggle={toggle} isOpen={isOpen}>
+    <Modal id={id} toggle={toggle} isOpen={isOpen}>
+      <form onSubmit={handleSubmit}>
         <div className="modal__header">{form.title}</div>
 
         <div className="modal__body">
           <textarea
             autoFocus
+            required
             id="message"
             rows={5}
             className="form__field"
-          ></textarea>
+            value={message}
+            onChange={event => setMessage(event.target.value)}
+          />
         </div>
 
         <div className="modal__footer">
-          <button type="submit" className="form__button">
-            Send message
+          <button
+            type="submit"
+            className="form__button"
+            disabled={formState === 'sending' || formState === 'finished'}
+          >
+            {formState === 'idle' && 'Send message'}
+            {formState === 'sending' && 'Sending message...'}
+            {formState === 'finished' && 'Message sent successfully'}
           </button>
         </div>
-      </Modal>
-    </>
+      </form>
+    </Modal>
   )
 }
 
