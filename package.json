@@ -47,7 +47,7 @@
     "start": "now dev",
     "dev": "BROWSER=none react-scripts start",
     "dev:scripts": "parcel ./src/scripts/v1/index.html",
-    "build": "react-scripts build && npm run build:scripts && npm run build:styles",
+    "build": "react-scripts build && yarn build:scripts && yarn build:styles",
     "build:scripts": "NODE_ENV=production parcel build ./src/scripts/v1/index.tsx -d ./build -o survey.js",
     "build:styles": "NODE_ENV=production parcel build ./src/scripts/v1/styles.css -d ./build -o survey.css",
     "test": "react-scripts test",
