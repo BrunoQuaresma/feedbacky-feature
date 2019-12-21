@@ -1,8 +1,8 @@
-import { getOrCreateLocalVoterId } from './utils'
+import React from 'react'
 import ReactDOM from 'react-dom'
+import { getOrCreateLocalVoterId } from './utils'
 import Survey from './Survey'
 import Form from './Form'
-import React from 'react'
 
 declare global {
   interface Window {

@@ -17,9 +17,11 @@ const Form: React.FC<{ id: string; voterId: string }> = ({ id, voterId }) => {
           {form.title}
         </label>
         <textarea id="message" rows={5} className="form__field"></textarea>
-        <button type="submit" className="form__button">
-          Send message
-        </button>
+        <div className="form__actions">
+          <button type="submit" className="form__button">
+            Send message
+          </button>
+        </div>
       </form>
     </>
   )
