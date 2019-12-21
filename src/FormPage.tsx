@@ -131,14 +131,28 @@ const FormPage: React.FC = () => {
           </section>
         )}
 
-        {form.replies && form.replies.length > 0 && (
+        {form.replies && (
           <section className="py-4">
             <div className="container mx-auto px-2">
               <h2 className="font-medium mb-2 text-lg">Replies</h2>
 
-              {form.replies.map(reply => (
-                <ReplyCard key={reply.id} reply={reply} />
-              ))}
+              {form.replies.length > 0 ? (
+                form.replies.map(reply => (
+                  <ReplyCard key={reply.id} reply={reply} />
+                ))
+              ) : (
+                <div className="px-4 py-24 border border-solid border-gray-300 rounded-lg flex bg-white items-center justify-center">
+                  <div className="mr-6">
+                    <i className="far fa-comments text-indigo-300 text-5xl"></i>
+                  </div>
+                  <div>
+                    <h2 className="font-medium text-2xl">No replies yet</h2>
+                    <p className="text-gray-600">
+                      Latest replies will be displayed here.
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </section>
         )}
