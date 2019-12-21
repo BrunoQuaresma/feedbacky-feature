@@ -31,6 +31,14 @@ const Topbar: React.FC = () => {
         <nav className="-mx-2 md:ml-16 md:mr-0">
           <NavLink
             className="inline-block px-3 py-3 sm:py-5 hover:text-white"
+            to="/forms"
+            isActive={(_, location) => location.pathname === '/forms'}
+          >
+            Forms
+          </NavLink>
+
+          <NavLink
+            className="inline-block px-3 py-3 sm:py-5 hover:text-white"
             to="/features"
             isActive={(_, location) => location.pathname === '/features'}
           >
@@ -43,14 +51,6 @@ const Topbar: React.FC = () => {
             isActive={(_, location) => location.pathname === '/surveys'}
           >
             Upvote Surveys
-          </NavLink>
-
-          <NavLink
-            className="inline-block px-3 py-3 sm:py-5 hover:text-white"
-            to="/forms"
-            isActive={(_, location) => location.pathname === '/forms'}
-          >
-            Forms
           </NavLink>
 
           <NavLink
