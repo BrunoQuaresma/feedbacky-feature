@@ -80,6 +80,22 @@ const FormPage: React.FC = () => {
                     <i className="far fa-copy"></i>
                   </button>
                 </code>
+                <p className="my-2">
+                  or, if you want to display your form inside a modal:
+                </p>
+                <code className="p-3 rounded bg-gray-200 block text-sm text-gray-700 relative">
+                  <pre>{`<div data-form="${form.id}" data-type="modal"></div>
+<button data-target="${form.id}">Give us feedback!</button>`}</pre>
+                  <button
+                    onClick={() =>
+                      clipboard.copy(`<div data-form="${form.id}" data-type="modal"></div>
+<button data-target="${form.id}">Give us feedback!</button>`)
+                    }
+                    className="absolute right-0 bottom-0 p-3"
+                  >
+                    <i className="far fa-copy"></i>
+                  </button>
+                </code>
               </section>
 
               <section className="mb-4">
