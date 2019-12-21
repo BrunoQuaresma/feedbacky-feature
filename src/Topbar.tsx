@@ -28,7 +28,7 @@ const Topbar: React.FC = () => {
           <i className="far fa-comment-dots mr-2"></i>feedbacky
         </Link>
 
-        <nav className="-mx-2 md:ml-16 md:mr-0">
+        <nav className="-mx-2 md:ml-16 md:mr-0 whitespace-no-wrap overflow-x-auto">
           <NavLink
             className="inline-block px-3 py-3 sm:py-5 hover:text-white"
             to="/forms"
