@@ -71,3 +71,23 @@ export const fetchForm = ({
       }
     }
   ).then(response => response.json())
+
+export const sendReply = ({
+  formId,
+  voterId,
+  content
+}: {
+  formId: string
+  voterId: string
+  content: string
+}) =>
+  fetch(`${process.env.SCRIPT_URL}/api/public/forms/${formId}/reply`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      voter_id: voterId,
+      content
+    })
+  }).then(response => response.json())
