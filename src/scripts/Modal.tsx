@@ -1,17 +1,11 @@
 import React from 'react'
-import VoteButton from './VoteButton'
-import { Feature } from './types'
-import ReactMarkdown from 'react-markdown'
 import { useTransition, animated } from 'react-spring'
 
 const Modal: React.FC<{
-  feature: Feature
-  surveyId: string
-  voterId: string
+  id: string
   isOpen: boolean
-  onVote: (survey: { features: Feature[] }) => void
   toggle: () => void
-}> = ({ feature, voterId, surveyId, onVote, isOpen, toggle }) => {
+}> = ({ id, isOpen, toggle, children }) => {
   const backdropTransitions = useTransition(isOpen, null, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -41,13 +35,13 @@ const Modal: React.FC<{
                       key={key}
                       style={props}
                       className="modal"
-                      data-testid={`modal-feature-${feature.id}`}
+                      data-testid={`modal-${id}`}
                       onClick={handleModalClick}
                     >
                       <button
                         className="modal-close"
                         onClick={toggle}
-                        data-testid={`modal-feature-${feature.id}-close`}
+                        data-testid={`modal-${id}-close`}
                       >
                         <svg
                           aria-hidden="true"
@@ -64,18 +58,7 @@ const Modal: React.FC<{
                           ></path>
                         </svg>
                       </button>
-                      <div className="modal__header">{feature.name}</div>
-                      <div className="modal__body">
-                        <ReactMarkdown source={feature.description} />
-                      </div>
-                      <div className="modal__footer">
-                        <VoteButton
-                          feature={feature}
-                          voterId={voterId}
-                          surveyId={surveyId}
-                          onVote={onVote}
-                        ></VoteButton>
-                      </div>
+                      {children}
                     </animated.div>
                   )
               )}

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { getOrCreateLocalVoterId } from './utils'
 import Survey from './Survey'
 import Form from './Form'
+import FormModal from './FormModal'
 
 declare global {
   interface Window {
@@ -44,6 +45,8 @@ window.feedbacky = {
   renderForms: ({ voterId, container = document }: FeedbackyConfig = {}) => {
     container.querySelectorAll('*[data-form]').forEach(formElement => {
       const formId = formElement.getAttribute('data-form')
+      const type = formElement.getAttribute('data-type')
+      const FormComponent = type === 'modal' ? FormModal : Form
 
       if (!formId) {
         throw new Error(
@@ -52,7 +55,10 @@ window.feedbacky = {
       }
 
       ReactDOM.render(
-        <Form id={formId} voterId={voterId || getOrCreateLocalVoterId()} />,
+        <FormComponent
+          id={formId}
+          voterId={voterId || getOrCreateLocalVoterId()}
+        />,
         formElement
       )
     })

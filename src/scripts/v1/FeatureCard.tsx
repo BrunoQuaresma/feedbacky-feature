@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Feature } from './types'
 import VoteButton from './VoteButton'
-import Modal from './Modal'
+import Modal from './FeatureModal'
 
 const FeatureCard: React.FC<{
   feature: Feature
