@@ -7,6 +7,7 @@ import { useHistory } from 'react-router'
 import Helmet from 'react-helmet'
 import usePageView from './usePageView'
 import { Link } from 'react-router-dom'
+import { trigger } from 'swr'
 
 type NewFeatureForm = {
   name: string
@@ -27,7 +28,8 @@ const NewFeaturePage: React.FC = () => {
 
   const onSubmit = async (form: NewFeatureForm) => {
     await axios.post('/api/features', form)
-    history.push('/')
+    trigger('/features')
+    history.push('/features')
   }
 
   return (
