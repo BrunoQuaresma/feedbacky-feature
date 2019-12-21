@@ -31,7 +31,9 @@ export default async (req: NowRequest, res: NowResponse) => {
       },
       q.Merge(q.Var('formDoc'), {
         replies: q.Map(
-          q.Paginate(q.Match(q.Index('replies_by_form'), q.Var('formRef'))),
+          q.Paginate(
+            q.Match(q.Index('last_replies_by_form'), q.Var('formRef'))
+          ),
           replyRef => q.Get(replyRef)
         )
       })

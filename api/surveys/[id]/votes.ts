@@ -22,7 +22,10 @@ export default async (req: NowRequest, res: NowResponse) => {
   const votes = await userClient.query<values.Page<VoteDoc>>(
     q.Map(
       q.Paginate(
-        q.Match(q.Index('votes_by_survey'), q.Ref(q.Collection('surveys'), id))
+        q.Match(
+          q.Index('last_votes_by_survey'),
+          q.Ref(q.Collection('surveys'), id)
+        )
       ),
       voteRef =>
         q.Let(
