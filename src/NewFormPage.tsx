@@ -18,9 +18,9 @@ const NewFormPage: React.FC = () => {
   const history = useHistory()
 
   const onSubmit = async (form: NewFormForm) => {
-    await axios.post('/api/forms', form)
+    const response = await axios.post('/api/forms', form)
     trigger('/forms')
-    history.push('/forms')
+    history.push(`/forms/${response.data.form.id}`)
   }
 
   return (
