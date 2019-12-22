@@ -176,10 +176,10 @@ describe('Public V1 Script', () => {
     await findByText('Feature A')
     const featureTitle = getByText('Feature A')
     fireEvent.click(featureTitle)
-    await findByTestId('modal-feature-1')
+    await findByTestId('modal-1')
 
-    const closeButton = getByTestId('modal-feature-1-close')
+    const closeButton = getByTestId('modal-1-close')
     fireEvent.click(closeButton)
-    await waitForElementToBeRemoved(() => queryByTestId('modal-feature-1'))
+    await waitForElementToBeRemoved(() => queryByTestId('modal-1'))
   })
 })
