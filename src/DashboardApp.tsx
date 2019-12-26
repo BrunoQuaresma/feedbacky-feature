@@ -14,6 +14,9 @@ import Loading from './Loading'
 import NewFormPage from './NewFormPage'
 import FeaturesPage from './FeaturesPage'
 import SurveysPage from './SurveysPage'
+import NPSFormsPage from './NPSFormsPage'
+import NewNPSFormPage from './NewNPSFormPage'
+import NPSFormPage from './NPSFormPage'
 
 const verifyToken = () => axios.get('/api/token')
 
@@ -51,6 +54,9 @@ const DashboardApp: React.FC = () => {
         <Route exact path="/forms/new" component={NewFormPage}></Route>
         <Route exact path="/forms/:id" component={FormPage}></Route>
         <Route exact path="/integrations" component={IntegrationsPage}></Route>
+        <Route exact path="/nps-forms" component={NPSFormsPage}></Route>
+        <Route exact path="/nps-forms/new" component={NewNPSFormPage}></Route>
+        <Route exact path="/nps-forms/:id" component={NPSFormPage}></Route>
       </Switch>
 
       <footer className="text-center text-sm text-gray-600 mt-auto p-6">

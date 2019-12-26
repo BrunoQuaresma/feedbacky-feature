@@ -27,12 +27,27 @@ export type Reply = {
   form_id: string
 }
 
+export type NPSReply = {
+  id: string
+  created_at: string
+  voter_id: string
+  nps_form_id: string
+  value: number
+}
+
 export type Form = {
   id: string
   name: string
   title: string
   number_of_replies: number
   replies?: Reply[]
+}
+
+export type NPSForm = {
+  id: string
+  name: string
+  question: string
+  replies?: NPSReply[]
 }
 
 export type Activity = { id: string } & (
@@ -60,4 +75,12 @@ export type FormsResponse = {
 
 export type FormResponse = {
   form: Form
+}
+
+export type NPSFormsResponse = {
+  nps_forms: NPSForm[]
+}
+
+export type NPSFormResponse = {
+  nps_form: NPSForm
 }

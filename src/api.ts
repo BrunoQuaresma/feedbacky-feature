@@ -4,7 +4,9 @@ import {
   FormsResponse,
   FormResponse,
   SurveysResponse,
-  Feature
+  NPSFormsResponse,
+  Feature,
+  NPSFormResponse
 } from './types'
 
 type ActivitiesResponse = {
@@ -45,3 +47,13 @@ export const getActivities = () =>
   axios
     .get<ActivitiesResponse>('/api/activities')
     .then(response => response.data.activities)
+
+export const getNPSForms = () =>
+  axios
+    .get<NPSFormsResponse>('/api/nps-forms')
+    .then(response => response.data.nps_forms)
+
+export const getNPSForm = (id: string) =>
+  axios
+    .get<NPSFormResponse>(`/api/nps-forms/${id}`)
+    .then(response => response.data.nps_form)
